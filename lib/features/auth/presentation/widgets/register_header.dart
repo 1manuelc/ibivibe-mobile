@@ -21,7 +21,7 @@ class RegisterHeader extends StatelessWidget {
         SizedBox(height: 12),
         FButton(
           onPress: () {},
-          style: FButtonStyle.outline(),
+          style: FButtonStyle.secondary(),
           prefix: Image.asset('assets/images/google-g-logo.webp', width: 24),
           child: Text("Entrar com Google", style: TextStyle(fontSize: 14)),
         ),
