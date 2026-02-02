@@ -23,16 +23,16 @@ class Navbar extends StatelessWidget {
       onChange: (i) {
         switch (i) {
           case 0:
-            context.go('/app/home');
+            context.push('/app/home');
             break;
           case 1:
-            context.go('/app/search');
+            context.push('/app/search');
             break;
           case 2:
-            context.go('/app/favorites');
+            context.push('/app/favorites');
             break;
           case 3:
-            context.go('/app/profile');
+            context.push('/app/profile');
             break;
         }
       },
