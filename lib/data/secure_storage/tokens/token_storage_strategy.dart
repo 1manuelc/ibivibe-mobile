@@ -1,4 +1,4 @@
-import 'package:ibiapabaapp/data/secure_storage/tokens/entities/token_response.dart';
+import 'package:ibiapabaapp/core/storage/token_response.dart';
 
 abstract class TokenStorageStrategy {
   Future<void> saveTokens(TokenResponse response) async {

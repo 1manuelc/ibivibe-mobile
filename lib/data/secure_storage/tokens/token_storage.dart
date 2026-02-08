@@ -1,9 +1,12 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ibiapabaapp/core/storage/token_response.dart';
 import 'package:ibiapabaapp/data/secure_storage/tokens/token_storage_strategy.dart';
-import 'package:ibiapabaapp/data/secure_storage/tokens/entities/token_response.dart';
 
 class TokenStorageImpl implements TokenStorageStrategy {
-  final _storage = FlutterSecureStorage();
+  TokenStorageImpl._();
+  static final TokenStorageImpl instance = TokenStorageImpl._();
+
+  final _storage = const FlutterSecureStorage();
 
   @override
   Future<void> saveTokens(TokenResponse response) async {
