@@ -24,7 +24,7 @@ class UserOnboardingScreen extends StatelessWidget {
           FButton.icon(
             onPress: () => context.pop(),
             style: FButtonStyle.ghost(),
-            child: Icon(FIcons.arrowLeft, size: 24),
+            child: Icon(Icons.keyboard_arrow_left_rounded, size: 24),
           ),
         ],
       ),
