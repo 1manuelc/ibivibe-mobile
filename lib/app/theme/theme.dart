@@ -1,9 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
 import 'package:flutter/material.dart';
+import 'package:ibiapabaapp/app/theme/button_style.dart';
+import 'package:ibiapabaapp/app/theme/date_field_style.dart';
 import 'package:ibiapabaapp/app/theme/text_field_style.dart';
 
-const brandPrimaryLight = Color.fromARGB(255, 55, 98, 8);
+const brandPrimaryLight = Color(0xFF376208);
 const brandPrimaryDark = Color(0xFFB9FF70);
 
 FThemeData customZincLight() {
@@ -23,7 +25,7 @@ FThemeData customZincLight() {
     destructiveForeground: Color(0xFFFAFAFA),
     error: Color(0xFFEF4444),
     errorForeground: Color(0xFFFAFAFA),
-    border: Color(0xFFE4E4E7),
+    border: Color(0xFFCCCCCC),
   );
 
   final typography = _typography(colors: colors);
@@ -38,10 +40,19 @@ FThemeData customZincLight() {
       style: style,
       typography: typography,
     ),
+    buttonStyles: getButtonStyles(
+      colors: colors,
+      typography: typography,
+      style: style,
+    ),
+    dateFieldStyle: dateFieldStyle(
+      colors: colors,
+      typography: typography,
+      style: style,
+    ),
   );
 }
 
-/// Tema dark baseado no zinc
 FThemeData customZincDark() {
   const colors = FColors(
     brightness: Brightness.dark,
@@ -59,7 +70,7 @@ FThemeData customZincDark() {
     destructiveForeground: Color(0xFFFAFAFA),
     error: Color(0xFFEF4444),
     errorForeground: Color(0xFFFAFAFA),
-    border: Color(0xFF3F3F46),
+    border: Color(0xFF4D4D56),
   );
 
   final typography = _typography(colors: colors);
@@ -73,6 +84,16 @@ FThemeData customZincDark() {
       colors: colors,
       style: style,
       typography: typography,
+    ),
+    buttonStyles: getButtonStyles(
+      colors: colors,
+      typography: typography,
+      style: style,
+    ),
+    dateFieldStyle: dateFieldStyle(
+      colors: colors,
+      typography: typography,
+      style: style,
     ),
   );
 }
@@ -103,55 +124,55 @@ FTypography _typography({
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 18,
-    height: 1.75,
+    height: 1.15,
   ),
   xl: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 20,
-    height: 1.75,
+    height: 1.25,
   ),
   xl2: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 22,
-    height: 2,
+    height: 1.35,
   ),
   xl3: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 30,
-    height: 2.25,
+    height: 1.45,
   ),
   xl4: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 36,
-    height: 2.5,
+    height: 1.55,
   ),
   xl5: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 48,
-    height: 1,
+    height: 1.65,
   ),
   xl6: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 60,
-    height: 1,
+    height: 1.75,
   ),
   xl7: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 72,
-    height: 1,
+    height: 1.85,
   ),
   xl8: TextStyle(
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 96,
-    height: 1,
+    height: 1.95,
   ),
 );
 
