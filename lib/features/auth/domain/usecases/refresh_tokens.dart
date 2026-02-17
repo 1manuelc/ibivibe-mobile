@@ -1,0 +1,14 @@
+import 'package:dartz/dartz.dart';
+import 'package:ibiapabaapp/core/errors/failures/failures.dart';
+import 'package:ibiapabaapp/features/auth/domain/entities/auth_result.dart';
+import 'package:ibiapabaapp/features/auth/domain/repositories/auth_repository.dart';
+
+class RefreshTokens {
+  final AuthRepository repository;
+
+  RefreshTokens(this.repository);
+
+  Future<Either<Failure, AuthResult>> call() {
+    return repository.refreshTokens();
+  }
+}
