@@ -2,14 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:ibiapabaapp/core/errors/exceptions/exceptions.dart';
 import 'package:ibiapabaapp/features/auth/data/exceptions/auth_exceptions.dart';
 
-extension ToException on DioException {
-  AppException mapDioExceptionToAppException() {
-    return DioErrorToExceptionMapper.map(this);
-  }
-}
-
-/// Extrai [code] e [message] do body da resposta.
-/// Aceita: { code }, { error }, { message }, { errors: [string] }.
+// extrai [code] e [message] do body da resposta.
+// aceita: { code }, { error }, { message }, { errors: [string] }.
 class _ResponsePayload {
   const _ResponsePayload({this.code, required this.message});
 
@@ -44,8 +38,8 @@ class _ResponsePayload {
   }
 }
 
-/// Mapeia apenas por [code] retornado pelo backend. Sem inferência por mensagem.
-/// Sempre exige code + message: se o backend não enviar code, usa [http_<status>].
+// mapeia apenas por [code] retornado pelo backend, sem inferência por mensagem.
+// exige code + message: se o backend não enviar code, usa [http_<status>].
 class DioErrorToExceptionMapper {
   static String _code(int? status, String? backendCode) {
     if (backendCode != null && backendCode.trim().isNotEmpty) {
