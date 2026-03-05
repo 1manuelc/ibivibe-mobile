@@ -1,25 +1,37 @@
 import 'dart:io';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ibiapabaapp/shared/ui/navbar.dart';
+import 'package:ibiapabaapp/shared/ui/fragments/inputs/navbar.dart';
 
-class AppShell extends StatefulWidget {
+class AppShell extends ConsumerStatefulWidget {
   final Widget child;
   const AppShell({super.key, required this.child});
 
   @override
-  State<AppShell> createState() => _AppShellState();
+  ConsumerState<AppShell> createState() => _AppShellState();
 }
 
-class _AppShellState extends State<AppShell> {
+class _AppShellState extends ConsumerState<AppShell> {
   DateTime? _lastBackPressed;
 
   @override
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).uri.toString();
     final locationIsHome = location == '/app/home';
+
+    final routesWithoutNavbar = [
+      '/app/companies',
+      '/app/cities',
+      '/app/events',
+    ];
+
+    final bool hideNavbar = routesWithoutNavbar.any(
+      (path) => location.startsWith(path),
+    );
 
     return PopScope(
       canPop: !locationIsHome,
@@ -32,32 +44,44 @@ class _AppShellState extends State<AppShell> {
             now.difference(_lastBackPressed!) > const Duration(seconds: 2)) {
           _lastBackPressed = now;
 
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                behavior: .floating,
-                duration: const Duration(seconds: 2),
-                elevation: 10,
-                backgroundColor: context.theme.colors.secondary,
-                content: Text(
-                  textAlign: .center,
-                  'Volte novamente para sair',
-                  style: TextStyle(
-                    color: context.theme.colors.secondaryForeground,
-                    fontSize: 16,
-                  ),
-                ),
+          showFToast(
+            duration: Duration(seconds: 3),
+            alignment: .bottomCenter,
+            context: context,
+            title: Text(
+              'Volte novamente para sair',
+              style: context.theme.typography.sm.copyWith(
+                color: context.theme.colors.foreground,
               ),
-            );
+            ),
+          );
         } else {
           exit(0);
         }
       },
-      child: Scaffold(
-        extendBody: true,
-        bottomNavigationBar: SafeArea(child: const Navbar()),
-        body: SafeArea(child: widget.child),
+      child: SafeArea(
+        top: false,
+        child: Scaffold(
+          extendBody: true,
+          bottomNavigationBar: PageTransitionSwitcher(
+            duration: const Duration(milliseconds: 300),
+            reverse: hideNavbar,
+            transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+              return FadeThroughTransition(
+                animation: primaryAnimation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+            child: hideNavbar
+                ? const SizedBox.shrink()
+                : SafeArea(
+                    key: const ValueKey('navbar'),
+                    child: const Navbar(),
+                  ),
+          ),
+          body: widget.child,
+        ),
       ),
     );
   }
