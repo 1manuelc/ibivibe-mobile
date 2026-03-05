@@ -5,8 +5,9 @@ class City {
   final String name;
   final String slug;
   final String? description;
+  final String imageUrl;
   final List<String> categories;
-  final LatLng location;
+  final LatLng? location;
 
   City({
     required this.id,
@@ -14,6 +15,7 @@ class City {
     required this.slug,
     this.description,
     required this.categories,
-    required this.location,
+    this.location,
+    required this.imageUrl,
   });
 }
