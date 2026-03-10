@@ -20,4 +20,9 @@ class LogTags {
   static const refresh = "[REFRESH]";
   static const getMe = "[GET_ME]";
   static const checkAvailability = "[CHECK_UNIQUE_AVAILABILITY]";
+
+  static const cities = "[CITIES]";
+  static const getAllCities = "[GET_ALL_CITIES]";
+  static const getCityById = "[GET_CITY_BY_ID]";
+  static const getCityMedia = "[GET_CITY_MEDIA]";
 }
