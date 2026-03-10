@@ -18,7 +18,7 @@ class QuickCategoriesList extends StatelessWidget {
     return Padding(
       padding: const .fromLTRB(24, 0, 0, 0),
       child: SizedBox(
-        height: 48,
+        height: 40,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),

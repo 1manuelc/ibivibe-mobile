@@ -2,36 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ibiapabaapp/features/cities/domain/entities/city.dart';
-import 'package:ibiapabaapp/features/cities/presentation/controllers/cities_controller.dart';
-import 'package:ibiapabaapp/features/cities/presentation/widgets/city_card.dart';
+import 'package:ibiapabaapp/features/companies/domain/entities/company.dart';
+import 'package:ibiapabaapp/features/companies/presentation/controllers/companies_controller.dart';
+import 'package:ibiapabaapp/features/companies/presentation/widgets/company_card.dart';
 import 'package:ibiapabaapp/shared/ui/fragments/effects/default_shimmer_effect.dart';
 import 'package:ibiapabaapp/shared/ui/layout/section_header.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-final List<City> _mockCities = List.generate(
+final List<Company> _mockCompanies = List.generate(
   5,
-  (index) => City(
+  (index) => Company(
     id: 'mock-$index',
+    cnpj: '',
+    maxReachLevel: .local,
     slug: 'mock',
-    name: 'Carregando cidade',
+    name: 'Carregando empresa',
     coverImgUrl: '',
     categories: ['Categoria', 'Subcategoria'],
   ),
 );
 
-class ExploreCitiesSection extends ConsumerStatefulWidget {
-  const ExploreCitiesSection({super.key});
+class CompaniesSection extends ConsumerStatefulWidget {
+  const CompaniesSection({super.key});
 
   @override
-  ConsumerState<ExploreCitiesSection> createState() =>
-      _ExploreCitiesSectionState();
+  ConsumerState<CompaniesSection> createState() => _CompaniesSectionState();
 }
 
-class _ExploreCitiesSectionState extends ConsumerState<ExploreCitiesSection> {
+class _CompaniesSectionState extends ConsumerState<CompaniesSection> {
   @override
   Widget build(BuildContext context) {
-    final citiesAsync = ref.watch(citiesProvider);
+    final companiesAsync = ref.watch(companiesProvider);
 
     return Column(
       mainAxisAlignment: .start,
@@ -41,15 +42,15 @@ class _ExploreCitiesSectionState extends ConsumerState<ExploreCitiesSection> {
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
           child: SectionHeader(
-            title: 'Explore as cidades da Ibiapaba',
-            onSeeAllTap: () => context.push('/app/cities'),
+            title: 'Explore as empresas da Ibiapaba',
+            onSeeAllTap: () => context.push('/app/companies'),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
-          child: citiesAsync.when(
+          child: companiesAsync.when(
             skipLoadingOnRefresh: false,
-            loading: () => _Section(cities: _mockCities, isLoading: true),
+            loading: () => _Section(companies: _mockCompanies, isLoading: true),
 
             error: (error, stack) => Center(
               child: Expanded(
@@ -63,7 +64,7 @@ class _ExploreCitiesSectionState extends ConsumerState<ExploreCitiesSection> {
                       size: 64,
                     ),
                     Text(
-                      'Erro ao carregar cidades',
+                      'Erro ao carregar empresas',
                       style: context.theme.typography.base,
                     ),
                   ],
@@ -71,7 +72,8 @@ class _ExploreCitiesSectionState extends ConsumerState<ExploreCitiesSection> {
               ),
             ),
 
-            data: (cities) => _Section(cities: cities, isLoading: false),
+            data: (companies) =>
+                _Section(companies: companies, isLoading: false),
           ),
         ),
       ],
@@ -81,9 +83,9 @@ class _ExploreCitiesSectionState extends ConsumerState<ExploreCitiesSection> {
 
 class _Section extends StatelessWidget {
   final bool isLoading;
-  final List<City> cities;
+  final List<Company> companies;
 
-  const _Section({required this.cities, required this.isLoading});
+  const _Section({required this.companies, required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +103,12 @@ class _Section extends StatelessWidget {
               addRepaintBoundaries: true,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
-              itemCount: cities.length,
+              itemCount: companies.length,
               separatorBuilder: (_, _) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: 250,
-                  child: CityCard(city: cities[index]),
+                  child: CompanyCard(company: companies[index]),
                 );
               },
             ),
