@@ -1,0 +1,32 @@
+import 'package:ibiapabaapp/core/errors/exceptions/global_exception_to_failure_mapper.dart';
+import 'package:ibiapabaapp/core/errors/failures/failures.dart';
+import 'package:ibiapabaapp/core/logger/log_tags.dart';
+import 'package:logger/logger.dart';
+
+mixin RepositoryLogHandler {
+  Logger get logger;
+  LogFeature get feature;
+
+  Failure Function(Object) get featureMapper =>
+      GlobalExceptionToFailureMapper.map;
+
+  Failure handleRepositoryError({
+    required dynamic exception,
+    required StackTrace stackTrace,
+    required LogTag action,
+  }) {
+    final String fullTag =
+        '${LogLayer.repository.tag}${feature.tag}${action.tag}';
+
+    logger.e(
+      fullTag,
+      error: {
+        'exception': exception.runtimeType.toString(),
+        'message': exception.toString(),
+      },
+      stackTrace: stackTrace,
+    );
+
+    return featureMapper(exception);
+  }
+}

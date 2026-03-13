@@ -1,28 +1,94 @@
-class LogTags {
-  static const success = "[SUCCESS]";
-  static const error = "[ERROR]";
-  static const info = "[INFO]";
-  static const request = "[REQUEST]";
-  static const response = "[RESPONSE]";
+abstract class LogTag {
+  String get tag;
+}
 
-  // LAYERS
-  static const dioInterceptor = "[DIO_INTERCEPTOR]";
-  static const dioErrorMapper = "[DIO_ERROR_MAPPER]";
-  static const network = '[NETWORK]';
-  static const datasource = '[DATASOURCE]';
-  static const repository = '[REPOSITORY]';
-  static const controller = '[CONTROLLER]';
+enum LogLayer implements LogTag {
+  network('[NETWORK]'),
+  datasource('[DATASOURCE]'),
+  repository('[REPOSITORY]'),
+  controller('[CONTROLLER]');
 
-  // FEATURES
-  static const auth = "[AUTH]";
-  static const login = "[LOGIN]";
-  static const register = "[REGISTER]";
-  static const refresh = "[REFRESH]";
-  static const getMe = "[GET_ME]";
-  static const checkAvailability = "[CHECK_UNIQUE_AVAILABILITY]";
+  @override
+  final String tag;
+  const LogLayer(this.tag);
+}
 
-  static const cities = "[CITIES]";
-  static const getAllCities = "[GET_ALL_CITIES]";
-  static const getCityById = "[GET_CITY_BY_ID]";
-  static const getCityMedia = "[GET_CITY_MEDIA]";
+enum LogLib implements LogTag {
+  dio('[DIO]'),
+  sembast('[SEMBAST]');
+
+  @override
+  final String tag;
+  const LogLib(this.tag);
+}
+
+enum NetworkAction implements LogTag {
+  interceptor('[INTERCEPTOR]'),
+  request('[REQUEST]'),
+  response('[RESPONSE]');
+
+  @override
+  final String tag;
+  const NetworkAction(this.tag);
+}
+
+enum LogStatus implements LogTag {
+  success('[SUCCESS]'),
+  error('[ERROR]'),
+  info('[INFO]');
+
+  @override
+  final String tag;
+  const LogStatus(this.tag);
+}
+
+enum LogFeature implements LogTag {
+  auth('[AUTH]'),
+  cities('[CITIES]'),
+  companies('[COMPANIES]'),
+  events('[EVENTS]'),
+  medias('[MEDIAS]');
+
+  @override
+  final String tag;
+  const LogFeature(this.tag);
+}
+
+enum AuthAction implements LogTag {
+  login('[LOGIN_WITH_EMAIL]'),
+  register('[REGISTER_WITH_EMAIL]'),
+  refreshTokens('[REFRESH_TOKENS]'),
+  getMe('[GET_ME]'),
+  checkAvailability('[CHECK_AVAILABILITY]');
+
+  @override
+  final String tag;
+  const AuthAction(this.tag);
+}
+
+enum CityAction implements LogTag {
+  getAllCities('[GET_ALL_CITIES]'),
+  getCityById('[GET_CITY_BY_ID]'),
+  getCityMedia('[GET_CITY_MEDIA]');
+
+  @override
+  final String tag;
+  const CityAction(this.tag);
+}
+
+enum CompanyAction implements LogTag {
+  getAllCompanies('[GET_ALL_COMPANIES]'),
+  getCompanyById('[GET_COMPANY_BY_ID]');
+
+  @override
+  final String tag;
+  const CompanyAction(this.tag);
+}
+
+enum MediaAction implements LogTag {
+  getEntityMedia('[GET_ENTITY_MEDIA]');
+
+  @override
+  final String tag;
+  const MediaAction(this.tag);
 }
