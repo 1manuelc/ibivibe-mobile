@@ -16,12 +16,12 @@ class CompanyCard extends StatelessWidget {
       mainAxisAlignment: .start,
       crossAxisAlignment: .start,
       mainAxisSize: .min,
-      spacing: 12,
+      spacing: 8,
       children: [
         GestureDetector(
           onTap: () => context.push('/app/companies/${company.id}'),
           child: SizedBox(
-            height: 160,
+            height: 140,
             width: .infinity,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
@@ -49,17 +49,19 @@ class CompanyCard extends StatelessWidget {
           runSpacing: 6,
           spacing: 6,
           children: [
-            ...company.categories.map(
-              (cat) => FBadge(
-                style: FBadgeStyle.secondary(),
-                child: Text(
-                  cat,
-                  style: context.theme.typography.xs.copyWith(
-                    fontWeight: .normal,
+            ...company.categories
+                .map(
+                  (cat) => FBadge(
+                    style: FBadgeStyle.secondary(),
+                    child: Text(
+                      cat,
+                      style: context.theme.typography.xs.copyWith(
+                        fontWeight: .normal,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
+                )
+                .take(2),
           ],
         ),
       ],
@@ -81,7 +83,7 @@ Widget getCompanyImage({
   final source = NetworkMedia(url: coverImgUrl);
 
   return SizedBox(
-    height: 160,
+    height: 140,
     width: double.infinity,
     child: ContentMedia(
       source: source,

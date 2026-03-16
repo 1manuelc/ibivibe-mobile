@@ -15,12 +15,12 @@ class CityCard extends StatelessWidget {
     return Column(
       mainAxisAlignment: .start,
       crossAxisAlignment: .start,
-      spacing: 12,
+      spacing: 8,
       children: [
         GestureDetector(
           onTap: () => context.push('/app/cities/${city.id}'),
           child: SizedBox(
-            height: 160,
+            height: 140,
             width: .infinity,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
@@ -42,18 +42,21 @@ class CityCard extends StatelessWidget {
         Wrap(
           runSpacing: 6,
           spacing: 6,
+          clipBehavior: .hardEdge,
           children: [
-            ...city.categories.map(
-              (cat) => FBadge(
-                style: FBadgeStyle.secondary(),
-                child: Text(
-                  cat,
-                  style: context.theme.typography.xs.copyWith(
-                    fontWeight: .normal,
+            ...city.categories
+                .map(
+                  (cat) => FBadge(
+                    style: FBadgeStyle.secondary(),
+                    child: Text(
+                      cat,
+                      style: context.theme.typography.xs.copyWith(
+                        fontWeight: .normal,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
+                )
+                .take(3),
           ],
         ),
       ],
