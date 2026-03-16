@@ -9,6 +9,8 @@ class Company {
   final ReachLevel maxReachLevel;
   final String? coverImgUrl;
   final List<String> categories;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   Company({
     required this.id,
@@ -19,5 +21,7 @@ class Company {
     required this.maxReachLevel,
     this.coverImgUrl,
     required this.categories,
+    required this.createdAt,
+    required this.updatedAt,
   });
 }

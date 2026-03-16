@@ -13,6 +13,8 @@ class CompanyParser {
       ),
       coverImgUrl: json['cover_img_url'] ?? '',
       description: json['description'] as String?,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
       categories:
           (json['categories'] as List<dynamic>?)
               ?.map((e) => e.toString())
@@ -34,7 +36,7 @@ class CompanyParser {
       'cnpj': company.cnpj,
       'slug': company.slug,
       'cover_img_url': company.coverImgUrl,
-      'max_reach_level': company.maxReachLevel,
+      'max_reach_level': company.maxReachLevel.name,
       'description': company.description,
       'categories': company.categories,
     };

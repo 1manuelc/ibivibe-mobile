@@ -43,13 +43,10 @@ class _CompanyDetailContent extends StatelessWidget {
     }
 
     return detail!.media.map((m) {
-      // Como todas as mídias da Company vêm da rede, usamos NetworkMedia
-      // A lógica de isVideo agora é tratada dentro do ContentCarousel/ContentMedia
       return NetworkMedia(
         url: m.url,
         title: detail?.company.name,
         isVideo: false
-        // Se sua entidade media tiver blurHash ou headers, passamos aqui
       );
     }).toList();
   }

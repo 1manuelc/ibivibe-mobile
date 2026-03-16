@@ -18,6 +18,8 @@ final List<Company> _mockCompanies = List.generate(
     maxReachLevel: ReachLevel.regional,
     coverImgUrl: '',
     categories: ['Categoria', 'Subcategoria'],
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
   ),
 );
 
@@ -177,7 +179,7 @@ class _Section extends StatelessWidget {
         HorizontalInfiniteCarousel(
           isLoading: isLoading,
           items: companies,
-          listHeight: 220,
+          listHeight: 248,
           itemWidth: 160,
           separator: SizedBox(width: 12),
           itemBuilder: (_, company) => CompanyCard(company: company),
