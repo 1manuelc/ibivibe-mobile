@@ -18,6 +18,8 @@ final List<Company> _mockCompanies = List.generate(
     name: 'Carregando empresa',
     coverImgUrl: '',
     categories: ['Categoria', 'Subcategoria'],
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
   ),
 );
 
