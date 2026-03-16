@@ -68,6 +68,7 @@ LoginController loginController(Ref ref) {
   final logger = ref.watch(loggerProvider);
   final usecase = ref.watch(loginWithEmailProvider);
   final session = ref.watch(sessionProvider.notifier);
+  
   return LoginController(
     loginWithEmail: usecase,
     session: session,
@@ -79,5 +80,11 @@ LoginController loginController(Ref ref) {
 RegisterController registerController(Ref ref) {
   final registerUsecase = ref.watch(registerWithEmailProvider);
   final checkUniqueUsecase = ref.watch(checkUniqueAvailabilityProvider);
-  return RegisterController(registerUsecase, checkUniqueUsecase);
+  final logger = ref.watch(loggerProvider);
+  
+  return RegisterController(
+    registerWithEmail: registerUsecase,
+    checkAvailability: checkUniqueUsecase,
+    logger: logger,
+  );
 }

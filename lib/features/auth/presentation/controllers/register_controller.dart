@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:ibiapabaapp/core/logger/handlers/controller_log_handler.dart';
+import 'package:ibiapabaapp/core/logger/log_tags.dart';
 import 'package:ibiapabaapp/features/auth/domain/entities/check_availability.dart';
 import 'package:ibiapabaapp/features/auth/domain/entities/register_form_data.dart';
 import 'package:ibiapabaapp/features/auth/domain/usecases/check_unique_availability.dart';
 import 'package:ibiapabaapp/features/auth/domain/usecases/register_with_email.dart';
 import 'package:ibiapabaapp/features/auth/presentation/states/register_state.dart';
+import 'package:logger/logger.dart';
 
-// TODO: implementar ControllerLogHandler
-class RegisterController extends ChangeNotifier {
-  // TODO: Refatorar para usar AsyncNotifier e gerar controller via riverpod: padronização com o restante das features
+// TODO: Refatorar para usar AsyncNotifier e gerar controller via riverpod: padronização com o restante das features
+class RegisterController extends ChangeNotifier with ControllerLogHandler {
+  @override
+  Logger logger;
+
+  @override
+  LogFeature get feature => LogFeature.auth;
 
   final RegisterWithEmail registerWithEmail;
   final CheckUniqueAvailability checkAvailability;
 
-  RegisterController(this.registerWithEmail, this.checkAvailability);
+  RegisterController({
+    required this.registerWithEmail,
+    required this.checkAvailability,
+    required this.logger,
+  });
 
   RegisterState _state = RegisterInitial();
   RegisterState get state => _state;
@@ -45,11 +56,13 @@ class RegisterController extends ChangeNotifier {
     return result.fold(
       (failure) {
         _availability[field] = (available: false, error: failure.message);
+        logControllerError(action: AuthAction.register, failure: failure);
         notifyListeners();
         return false;
       },
       (availability) {
         _availability[field] = (available: availability.available, error: null);
+        logControllerSuccess(action: AuthAction.register);
         notifyListeners();
         return availability.available;
       },
@@ -72,8 +85,14 @@ class RegisterController extends ChangeNotifier {
     );
 
     _state = result.fold(
-      (failure) => RegisterError(failure.message),
-      (_) => RegisterSuccess(),
+      (failure) {
+        logControllerError(action: AuthAction.register, failure: failure);
+        return RegisterError(failure.message);
+      },
+      (_) {
+        logControllerSuccess(action: AuthAction.register);
+        return RegisterSuccess();
+      },
     );
 
     notifyListeners();
