@@ -1,14 +1,20 @@
 import 'package:dartz/dartz.dart';
 import 'package:ibiapabaapp/core/errors/failures/failures.dart';
+import 'package:ibiapabaapp/core/usecases/usecase.dart';
 import 'package:ibiapabaapp/features/cities/domain/entities/city.dart';
 import 'package:ibiapabaapp/features/cities/domain/repositories/cities_repository.dart';
 
-// TODO: refatorar usecases restantes para implementar usecase abstract
-class GetAllCities {
+class GetAllCities implements Usecase<List<City>, GetAllCitiesParams> {
   final CitiesRepository repository;
   GetAllCities(this.repository);
 
-  Future<Either<Failure, List<City>>> call({bool forceRefresh = false}) {
-    return repository.getAllCities(forceRefresh: forceRefresh);
+  @override
+  Future<Either<Failure, List<City>>> call(GetAllCitiesParams params) {
+    return repository.getAllCities(forceRefresh: params.forceRefresh);
   }
+}
+
+class GetAllCitiesParams {
+  final bool forceRefresh;
+  const GetAllCitiesParams({this.forceRefresh = false});
 }

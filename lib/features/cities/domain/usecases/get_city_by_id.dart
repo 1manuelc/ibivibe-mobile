@@ -1,13 +1,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:ibiapabaapp/core/errors/failures/failures.dart';
+import 'package:ibiapabaapp/core/usecases/usecase.dart';
 import 'package:ibiapabaapp/features/cities/domain/entities/city.dart';
 import 'package:ibiapabaapp/features/cities/domain/repositories/cities_repository.dart';
 
-class GetCityById {
+class GetCityById implements Usecase<City?, GetCityByIdParams> {
   final CitiesRepository repository;
   GetCityById(this.repository);
 
-  Future<Either<Failure, City?>> call(String id) {
-    return repository.getCityById(id);
+  @override
+  Future<Either<Failure, City?>> call(GetCityByIdParams params) {
+    return repository.getCityById(params.id);
   }
+}
+
+class GetCityByIdParams {
+  final String id;
+
+  GetCityByIdParams({required this.id});
 }
