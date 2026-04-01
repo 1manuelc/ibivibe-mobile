@@ -146,7 +146,7 @@ FTypography _typography({
     color: colors.foreground,
     fontFamily: defaultFontFamily,
     fontSize: 16,
-    height: 1.5,
+    height: 1.25,
   ),
   lg: TextStyle(
     color: colors.foreground,
