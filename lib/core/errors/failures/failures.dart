@@ -4,6 +4,11 @@ abstract class AppFailure {
   const AppFailure({required this.message, required this.code});
 }
 
+class InternalFailure extends AppFailure {
+  const InternalFailure(String message)
+    : super(message: message, code: 'internal_error');
+}
+
 class ServerFailure extends AppFailure {
   const ServerFailure(String message)
     : super(message: message, code: 'server_error');
