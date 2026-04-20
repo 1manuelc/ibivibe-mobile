@@ -4,22 +4,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ibiapabaapp/app/router/transitions/fade_through_page.dart';
 import 'package:ibiapabaapp/app/router/transitions/shared_axis_page.dart';
-import 'package:ibiapabaapp/features/auth/presentation/providers/session_provider.dart';
+import 'package:ibiapabaapp/core/preferences/user_preferences_state_provider.dart';
+import 'package:ibiapabaapp/core/session/app_session_notifier_provider.dart';
+import 'package:ibiapabaapp/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:ibiapabaapp/features/cities/presentation/screens/cities_overview_screen.dart';
 import 'package:ibiapabaapp/features/cities/presentation/screens/city_detail_screen.dart';
-import 'package:ibiapabaapp/features/companies/presentation/screens/companies_overview_screen.dart';
-import 'package:ibiapabaapp/features/companies/presentation/screens/company_detail_screen.dart';
+import 'package:ibiapabaapp/features/businesses/presentation/screens/businesses_overview_screen.dart';
+import 'package:ibiapabaapp/features/businesses/presentation/screens/business_detail_screen.dart';
 import 'package:ibiapabaapp/features/events/presentation/screens/events_overview_screen.dart';
 import 'package:ibiapabaapp/features/events/presentation/screens/event_detail_screen.dart';
+import 'package:ibiapabaapp/features/favorites/presentation/screens/favorites_screen.dart';
+import 'package:ibiapabaapp/features/search/presentation/screens/expanded_search_screen.dart';
+import 'package:ibiapabaapp/features/onboarding/presentation/screens/company_data_screen.dart';
+import 'package:ibiapabaapp/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:ibiapabaapp/features/onboarding/presentation/screens/interests/profile_businesses_interests_screen.dart';
+import 'package:ibiapabaapp/features/onboarding/presentation/screens/interests/profile_events_interests_screen.dart';
+import 'package:ibiapabaapp/features/profiles/presentation/widgets/screens/settings_screen.dart';
+import 'package:ibiapabaapp/features/profiles/presentation/widgets/screens/under_development_screen.dart';
+import 'package:ibiapabaapp/features/webviews/presentation/screens/webview_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:ibiapabaapp/app/router/app_shell.dart';
 import 'package:ibiapabaapp/features/home/presentation/screens/home_screen.dart';
-import 'package:ibiapabaapp/features/home/presentation/screens/search_screen.dart';
-import 'package:ibiapabaapp/features/onboarding/company_onboarding_screen.dart';
-import 'package:ibiapabaapp/features/onboarding/user_onboarding_screen.dart';
+import 'package:ibiapabaapp/features/search/presentation/screens/search_screen.dart';
 import 'package:ibiapabaapp/features/auth/presentation/screens/register_screen.dart';
-import 'package:ibiapabaapp/features/profile/presentation/screens/profile_screen.dart';
+import 'package:ibiapabaapp/features/profiles/presentation/widgets/screens/profile_screen.dart';
 import 'package:ibiapabaapp/features/welcome/welcome_screen.dart';
 
 part 'app_router_provider.g.dart';
@@ -33,12 +42,19 @@ GoRouter appRouter(Ref ref) {
     refreshListenable: notifier,
     redirect: (context, state) {
       final isAuthenticated = notifier.isAuthenticated;
+      final needsOnboarding = notifier.needsOnboarding;
       final isLoggingIn =
           state.matchedLocation.startsWith('/welcome') ||
           state.matchedLocation.startsWith('/auth');
 
       if (!isAuthenticated) {
         return isLoggingIn ? null : '/welcome';
+      }
+
+      if (needsOnboarding &&
+          !state.matchedLocation.startsWith('/onboarding') &&
+          !state.matchedLocation.startsWith('/app/interests')) {
+        return '/onboarding';
       }
 
       if (isLoggingIn) {
@@ -48,36 +64,61 @@ GoRouter appRouter(Ref ref) {
       return null;
     },
     routes: [
-      // ===================== Welcome & Onboarding =====================
+      // ─── Welcome & Onboarding ──────────────────────────────────────────────
       GoRoute(
         path: '/welcome',
         builder: (context, state) => const WelcomeScreen(),
       ),
       GoRoute(
-        path: '/onboarding/user',
-        builder: (context, state) => const UserOnboardingScreen(),
-      ),
-      GoRoute(
-        path: '/onboarding/company',
-        builder: (context, state) => const CompanyOnboardingScreen(),
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
       ),
 
-      // ===================== Authentication =====================
+      // ─── Interests (Onboarding & reutilizável) ─────────────────────────────
+      GoRoute(
+        path: '/app/interests/businesses',
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: UserCompaniesInterestsScreen(),
+          type: SharedAxisTransitionType.horizontal,
+          duration: const Duration(milliseconds: 500),
+        ),
+      ),
+
+      GoRoute(
+        path: '/app/interests/events',
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: UserEventsInterestsScreen(),
+          type: SharedAxisTransitionType.horizontal,
+          duration: const Duration(milliseconds: 500),
+        ),
+      ),
+
+      // ─── Business Data (Onboarding & reutilizável) ─────────────────────────────
+      GoRoute(
+        path: '/app/businesses/basic-data',
+        builder: (context, state) => const CompanyDataScreen(),
+      ),
+
+      // ─── Authentication ────────────────────────────────────────────────────
       GoRoute(
         path: '/auth/register',
         builder: (context, state) => const RegisterScreen(),
       ),
 
-      // ===================== AppShell =====================
+      // ─── AppShell ──────────────────────────────────────────────────────────
       ShellRoute(
         builder: (context, state, child) => AppShell(child: child),
         routes: [
-          // ===================== Navbar =====================
+          // ─── Home ──────────────────────────────────────────────────────────
           GoRoute(
             path: '/app/home',
             pageBuilder: (context, state) =>
                 FadeThroughPage(key: state.pageKey, child: const HomeScreen()),
           ),
+
+          // ─── Home > Search ─────────────────────────────────────────────────
           GoRoute(
             path: '/app/search',
             pageBuilder: (context, state) => FadeThroughPage(
@@ -85,20 +126,68 @@ GoRouter appRouter(Ref ref) {
               child: const SearchScreen(),
             ),
           ),
+
+          // ─── Home > Search > ExpandedSearch ────────────────────────────────
+          GoRoute(
+            path: '/app/search/expanded',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const ExpandedSearchScreen(),
+              transitionDuration: const Duration(milliseconds: 400),
+              reverseTransitionDuration: const Duration(milliseconds: 300),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(
+                      opacity: CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOut,
+                        reverseCurve: Curves.easeIn,
+                      ),
+                      child: child,
+                    );
+                  },
+            ),
+          ),
+
+          // ─── Home > Favorites ──────────────────────────────────────────────
           GoRoute(
             path: '/app/favorites',
             pageBuilder: (context, state) => FadeThroughPage(
               key: state.pageKey,
-              child: const Placeholder(child: Text("Favorites")),
+              child: const FavoritesScreen(),
             ),
           ),
+          // ─── Home > Profile ────────────────────────────────────────────────
           GoRoute(
             path: '/app/profile',
             pageBuilder: (context, state) =>
                 FadeThroughPage(key: state.pageKey, child: ProfileScreen()),
           ),
 
-          // ===================== Cities =====================
+          // ─── Home > Profile > Settings ─────────────────────────────────────
+          GoRoute(
+            path: '/app/settings',
+            pageBuilder: (context, state) =>
+                FadeThroughPage(key: state.pageKey, child: SettingsScreen()),
+          ),
+
+          // ─── Home > Under Development ──────────────────────────────────────
+          GoRoute(
+            path: '/app/under-development-notice',
+            pageBuilder: (context, state) {
+              final args = state.extra as UnderDevelopmentArgs?;
+              return FadeThroughPage(
+                key: state.pageKey,
+                child: UnderDevelopmentScreen(
+                  featureName: args?.featureName,
+                  featureDescription: args?.featureDescription,
+                  featureIcon: args?.featureIcon,
+                ),
+              );
+            },
+          ),
+
+          // ─── Cities ────────────────────────────────────────────────────────
           GoRoute(
             path: '/app/cities',
             pageBuilder: (context, state) => FadeThroughPage(
@@ -120,19 +209,19 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // ===================== Companies =====================
+          // ─── Businesses ─────────────────────────────────────────────────────
           GoRoute(
-            path: '/app/companies',
+            path: '/app/businesses',
             pageBuilder: (context, state) => FadeThroughPage(
               key: state.pageKey,
-              child: CompaniesOverviewScreen(),
+              child: BusinessesOverviewScreen(),
             ),
             routes: [
               GoRoute(
                 path: ':id',
                 pageBuilder: (context, state) => SharedAxisPage(
                   key: state.pageKey,
-                  child: CompanyDetailScreen(
+                  child: BusinessDetailScreen(
                     id: state.pathParameters['id'].toString(),
                   ),
                   type: SharedAxisTransitionType.scaled,
@@ -142,7 +231,7 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // ===================== Events =====================
+          // ─── Events ────────────────────────────────────────────────────────
           GoRoute(
             path: '/app/events',
             pageBuilder: (context, state) => FadeThroughPage(
@@ -163,6 +252,22 @@ GoRouter appRouter(Ref ref) {
               ),
             ],
           ),
+
+          // ─── WebView ──────────────────────────────────────────────────────
+          GoRoute(
+            path: '/app/webview',
+            builder: (context, state) {
+              final extra = state.extra;
+
+              if (extra is! WebViewArgs) {
+                return const Scaffold(
+                  body: Center(child: Text('Invalid arguments')),
+                );
+              }
+
+              return WebViewScreen(args: extra);
+            },
+          ),
         ],
       ),
     ],
@@ -174,8 +279,11 @@ GoRouter appRouter(Ref ref) {
 
 class _AuthNotifier extends ChangeNotifier {
   _AuthNotifier(this._ref) {
-    _subscription = _ref.listen(isAuthenticatedProvider, (previous, next) {
-      if (previous != next) notifyListeners();
+    _subscription = _ref.listen(appSessionProvider, (previous, next) {
+      if (previous?.account != next.account ||
+          previous?.needsOnboarding != next.needsOnboarding) {
+        notifyListeners();
+      }
     });
   }
 
@@ -183,6 +291,8 @@ class _AuthNotifier extends ChangeNotifier {
   late final ProviderSubscription _subscription;
 
   bool get isAuthenticated => _ref.read(isAuthenticatedProvider);
+  bool get needsOnboarding =>
+      _ref.read(userPreferencesStateProvider).needsOnboarding;
 
   @override
   void dispose() {
