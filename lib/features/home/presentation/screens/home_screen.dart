@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
-import 'package:ibiapabaapp/features/home/presentation/widgets/companies_section.dart';
+import 'package:ibiapabaapp/core/session/app_session_notifier_provider.dart';
+import 'package:ibiapabaapp/features/home/presentation/widgets/businesses_section.dart';
 import 'package:ibiapabaapp/features/home/presentation/widgets/explore_cities_section.dart';
 import 'package:ibiapabaapp/features/home/presentation/widgets/now_happening_section.dart';
 import 'package:ibiapabaapp/features/home/presentation/widgets/sheets/change_location_sheet.dart';
@@ -59,9 +61,10 @@ class _HomeHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class _ActualCityButton extends StatelessWidget {
+class _ActualCityButton extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final session = ref.watch(appSessionProvider);
     return FTooltip(
       tipAnchor: Alignment.topLeft,
       spacing: const FPortalSpacing(12),
@@ -76,12 +79,15 @@ class _ActualCityButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Ubajara, CE', // TODO: trocar para cidade da sessão
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: context.theme.colors.foreground,
+            Expanded(
+              child: Text(
+                session.currentCity?.name ?? 'Cidade desconhecida',
+                overflow: .ellipsis,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: context.theme.colors.foreground,
+                ),
               ),
             ),
             const SizedBox(width: 4),

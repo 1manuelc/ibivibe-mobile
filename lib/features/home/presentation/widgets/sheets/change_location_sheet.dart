@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
+import 'package:ibiapabaapp/core/location/presentation/providers/location_state_provider.dart';
 import 'package:ibiapabaapp/core/session/app_session_notifier_provider.dart';
 import 'package:ibiapabaapp/shared/ui/fragments/toast/show_app_toast.dart';
 import 'package:ibiapabaapp/shared/ui/layout/sheet_drag_indicator.dart';
@@ -41,7 +42,7 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
 
     // Lê a posição já disponível em sessão antes de montar o mapa —
     // evita o "pulo" de fallback → posição real na segunda abertura
-    final sessionPos = ref.read(appSessionProvider).devicePosition;
+    final sessionPos = ref.read(locationStateProvider).devicePosition;
     final initialPos = sessionPos != null
         ? AppLatLng(sessionPos.latitude, sessionPos.longitude)
         : _fallbackPosition;
@@ -55,7 +56,7 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
     // Resolve posição silenciosamente se ainda não foi obtida nesta sessão
     // Se já existir em session, retorna imediatamente sem chamar o GPS
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(appSessionProvider.notifier).resolveDevicePosition();
+      ref.read(locationStateProvider.notifier).resolveDevicePosition();
     });
   }
 
@@ -69,7 +70,7 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
     final previousCity = ref.read(appSessionProvider).currentCity;
 
     final failure = await ref
-        .read(appSessionProvider.notifier)
+        .read(locationStateProvider.notifier)
         .detectAndSetNearestCity();
     // detectAndSetNearestCity já chama resolveDevicePosition(force: true) internamente
 
@@ -80,6 +81,23 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
         _loadingLocation = false;
         _locationError = failure.message;
       });
+
+      final title = switch (failure.code) {
+        'location_permission_denied' => 'Permissão de localização negada',
+        'location_permission_denied_permanently' =>
+          'Permissão de localização negada permanentemente',
+        'location_service_disabled' => 'Localização desativada ou indisponível',
+        'location_service_timeout' => 'Tempo esgotado para obter localização',
+        _ => 'Erro de localização',
+      };
+
+      showAppToast(
+        alignment: .topCenter,
+        context: context,
+        icon: const Icon(Icons.location_off_outlined),
+        title: Text(title),
+        description: Text(failure.message),
+      );
     } else {
       setState(() => _loadingLocation = false);
       navigator.pop();
@@ -110,17 +128,11 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
     final theme = context.theme;
 
     // Lê direto do appSessionProvider — zero overhead, sem provider extra
-    final session = ref.watch(appSessionProvider);
+    final session = ref.watch(locationStateProvider);
     final devicePos = session.devicePosition;
     final currentPosition = devicePos != null
         ? AppLatLng(devicePos.latitude, devicePos.longitude)
         : null;
-
-    // Mostra overlay de loading apenas na primeira vez (posição ainda null e
-    // ainda não houve nenhum valor resolvido)
-    final isLoadingMap =
-        currentPosition == null &&
-        ref.watch(appSessionProvider.select((s) => s.devicePosition == null));
 
     final mapWithPosition = AppMapProvider.updatePosition(
       _mapWidget,
@@ -148,7 +160,7 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
 
               // ── Mapa ──────────────────────────────────────────────────────
               _SheetMap(
-                isLoadingMap: isLoadingMap,
+                isLoadingMap: _loadingLocation,
                 mapWithPosition: mapWithPosition,
               ),
               const SizedBox(height: 12),
@@ -185,6 +197,104 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _SheetHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Alterar localização',
+          style: context.theme.typography.lg.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.settings_outlined),
+          onPressed: () {},
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
+        ),
+      ],
+    );
+  }
+}
+
+class _SheetMap extends StatelessWidget {
+  final AppMapWidget mapWithPosition;
+  final bool isLoadingMap;
+
+  const _SheetMap({required this.isLoadingMap, required this.mapWithPosition});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
+        height: 180,
+        child: Stack(
+          children: [
+            mapWithPosition,
+            if (isLoadingMap)
+              Positioned.fill(
+                child: ColoredBox(
+                  color: context.theme.colors.muted,
+                  child: Center(
+                    child: FCircularProgress(
+                      style: (style) => style.copyWith(
+                        iconStyle: style.iconStyle.copyWith(size: 32),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SheetActions extends StatelessWidget {
+  final bool isLoadingLocation;
+  final VoidCallback detectNearestCity;
+
+  const _SheetActions({
+    required this.isLoadingLocation,
+    required this.detectNearestCity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: FButton(
+            onPress: isLoadingLocation ? null : detectNearestCity,
+            style: FButtonStyle.primary(),
+            prefix: isLoadingLocation
+                ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : null,
+            child: Text(isLoadingLocation ? 'Detectando...' : 'Me localize'),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: FButton(
+            onPress: () {},
+            style: FButtonStyle.secondary(),
+            child: const Text('Editar'),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -235,103 +345,6 @@ class _RecentLocationsList extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class _SheetHeader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Alterar localização',
-          style: context.theme.typography.lg.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.settings_outlined),
-          onPressed: () {},
-          padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(),
-        ),
-      ],
-    );
-  }
-}
-
-class _SheetMap extends StatelessWidget {
-  final AppMapWidget mapWithPosition;
-  final bool isLoadingMap;
-
-  const _SheetMap({required this.isLoadingMap, required this.mapWithPosition});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: SizedBox(
-        height: 180,
-        child: Stack(
-          children: [
-            mapWithPosition,
-            if (isLoadingMap)
-              Positioned.fill(
-                child: ColoredBox(
-                  color: context.theme.colors.muted,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: context.theme.colors.primary,
-                      strokeWidth: 2,
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SheetActions extends StatelessWidget {
-  final bool isLoadingLocation;
-  final VoidCallback detectNearestCity;
-
-  const _SheetActions({
-    required this.isLoadingLocation,
-    required this.detectNearestCity,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: FButton(
-            onPress: isLoadingLocation ? null : detectNearestCity,
-            style: FButtonStyle.primary(),
-            prefix: isLoadingLocation
-                ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : null,
-            child: Text(isLoadingLocation ? 'Detectando...' : 'Me localize'),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: FButton(
-            onPress: () {},
-            style: FButtonStyle.secondary(),
-            child: const Text('Editar'),
-          ),
-        ),
-      ],
     );
   }
 }
