@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ibiapabaapp/core/session/app_session_notifier_provider.dart';
-import 'package:ibiapabaapp/features/profile/presentation/screens/profile_screen.dart';
+import 'package:ibiapabaapp/core/preferences/user_preferences_state_provider.dart';
+import 'package:ibiapabaapp/features/profiles/presentation/widgets/screens/profile_screen.dart';
 import 'package:ibiapabaapp/shared/ui/dialogs/logout_dialog.dart';
 import 'package:ibiapabaapp/shared/ui/dialogs/theme_dialog.dart';
 
@@ -54,10 +54,11 @@ class _AccountSection extends StatelessWidget {
       children: [
         .tile(
           prefix: const Icon(FIcons.user),
-          title: const Text('Perfil e interesses'),
-          subtitle: Text('Nome, foto, preferências'),
+          title: const Text('Perfil'),
+          subtitle: Text('Nome, foto, informações adicionais'),
           suffix: const Icon(FIcons.chevronRight),
-          onPress: () => showTodoToast(context, 'Perfil e interesses'),
+          onPress: () => showTodoToast(context, 'Perfil'),
+          // onPress: () => context.push('/onboarding'),
         ),
         .tile(
           prefix: const Icon(FIcons.creditCard),
@@ -82,7 +83,7 @@ class _AppearenceSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentThemeMode = ref.watch(
-      appSessionProvider.select((s) => s.themeMode ?? ThemeMode.system),
+      userPreferencesStateProvider.select((s) => s.themeMode),
     );
 
     return FTileGroup(
