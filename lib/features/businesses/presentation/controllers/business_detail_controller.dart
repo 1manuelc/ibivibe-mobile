@@ -19,14 +19,13 @@ part 'business_detail_controller.g.dart';
 @riverpod
 class BusinessDetail extends _$BusinessDetail with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.businesses;
 
   @override
   Future<BusinessDetailData?> build(String id) async {
-    logger = ref.read(loggerProvider);
     final user = ref.watch(appSessionProvider.select((s) => s.account));
     if (user == null) return null;
 

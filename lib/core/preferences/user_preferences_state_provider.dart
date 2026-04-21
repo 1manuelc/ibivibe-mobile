@@ -13,16 +13,13 @@ part 'user_preferences_state_provider.g.dart';
 class UserPreferencesState extends _$UserPreferencesState
     with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.session;
 
   @override
-  UserPreferences build() {
-    logger = ref.read(loggerProvider);
-    return const UserPreferences();
-  }
+  UserPreferences build() => const UserPreferences();
 
   UserPreferencesStorage get _storage =>
       ref.read(userPreferencesStorageProvider);

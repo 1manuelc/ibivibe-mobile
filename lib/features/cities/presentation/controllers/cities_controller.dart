@@ -14,14 +14,13 @@ part 'cities_controller.g.dart';
 @riverpod
 class Cities extends _$Cities with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.cities;
 
   @override
   Future<List<City>> build() async {
-    logger = ref.read(loggerProvider);
     final user = ref.watch(appSessionProvider.select((s) => s.account));
     if (user == null) return [];
     return _fetchRemote();

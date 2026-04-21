@@ -14,14 +14,13 @@ part 'medias_controller.g.dart';
 @riverpod
 class EntityMedias extends _$EntityMedias with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.medias;
 
   @override
   Future<List<Media>> build(EntityType entityType, String entityId) async {
-    logger = ref.read(loggerProvider);
     final user = ref.watch(appSessionProvider.select((s) => s.account));
     if (user == null) return [];
 

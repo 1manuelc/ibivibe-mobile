@@ -18,16 +18,13 @@ part 'register_controller.g.dart';
 class RegisterController extends _$RegisterController
     with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.auth;
 
   @override
-  RegisterState build() {
-    logger = ref.read(loggerProvider);
-    return RegisterState.initial();
-  }
+  RegisterState build() => RegisterState.initial();
 
   bool? isAvailable(AvailabilityField field) =>
       state.availability[field]?.available;

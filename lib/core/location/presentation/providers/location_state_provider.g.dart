@@ -41,7 +41,7 @@ final class LocationStateProvider
   }
 }
 
-String _$locationStateHash() => r'8df4a135562dfcd4cb894d9c717220f5b8d71eec';
+String _$locationStateHash() => r'4e51eba8754267c84a7093601256a26e1510ddf6';
 
 abstract class _$LocationState extends $Notifier<LocationData> {
   LocationData build();

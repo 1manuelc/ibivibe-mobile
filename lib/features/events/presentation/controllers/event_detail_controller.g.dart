@@ -50,7 +50,7 @@ final class EventDetailProvider
   }
 }
 
-String _$eventDetailHash() => r'337be3f091e70915be822b2b277b51ebde519abc';
+String _$eventDetailHash() => r'596471d39b207acc99f655d5dfabef84168e7351';
 
 final class EventDetailFamily extends $Family
     with

@@ -50,7 +50,7 @@ final class BusinessDetailProvider
   }
 }
 
-String _$businessDetailHash() => r'a576ac8f64ba518130f6bdd66c67c8c7d9dc3729';
+String _$businessDetailHash() => r'6db5349380a3145261d2af95a2cb03b4dc99c203';
 
 final class BusinessDetailFamily extends $Family
     with

@@ -4,6 +4,7 @@ import 'package:ibiapabaapp/core/location/domain/entities/location_data.dart';
 import 'package:ibiapabaapp/core/location/presentation/providers/location_providers.dart';
 import 'package:ibiapabaapp/core/logger/handlers/controller_log_handler.dart';
 import 'package:ibiapabaapp/core/logger/log_tags.dart';
+import 'package:ibiapabaapp/core/logger/logger.dart';
 import 'package:ibiapabaapp/features/cities/domain/entities/city.dart';
 import 'package:ibiapabaapp/features/cities/domain/usecases/get_all_cities.dart';
 import 'package:ibiapabaapp/features/cities/presentation/providers/cities_providers.dart';
@@ -15,12 +16,10 @@ part 'location_state_provider.g.dart';
 @Riverpod(keepAlive: true)
 class LocationState extends _$LocationState with ControllerLogHandler {
   @override
-  LocationData build() {
-    return LocationData();
-  }
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
-  late final Logger logger;
+  LocationData build() => LocationData();
 
   @override
   LogFeature get feature => LogFeature.location;

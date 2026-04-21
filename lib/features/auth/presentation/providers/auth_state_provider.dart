@@ -16,16 +16,13 @@ part 'auth_state_provider.g.dart';
 @Riverpod(keepAlive: true)
 class AuthState extends _$AuthState with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.session;
 
   @override
-  AuthData build() {
-    logger = ref.read(loggerProvider);
-    return const AuthData();
-  }
+  AuthData build() => AuthData();
 
   // TODO: refatorar para simplificar emaranhado de métodos
   Future<void> restore() async {

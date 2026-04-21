@@ -20,14 +20,13 @@ part 'event_detail_controller.g.dart';
 @riverpod
 class EventDetail extends _$EventDetail with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.events;
 
   @override
   Future<EventDetailData?> build(String id) async {
-    logger = ref.read(loggerProvider);
     final user = ref.watch(appSessionProvider.select((s) => s.account));
     if (user == null) return null;
 

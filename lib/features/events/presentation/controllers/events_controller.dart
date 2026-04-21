@@ -13,14 +13,13 @@ part 'events_controller.g.dart';
 @riverpod
 class Events extends _$Events with ControllerLogHandler {
   @override
-  late final Logger logger;
+  late final Logger logger = ref.read(loggerProvider);
 
   @override
   LogFeature get feature => LogFeature.events;
 
   @override
   Future<List<Event>> build() async {
-    logger = ref.read(loggerProvider);
     final user = ref.watch(appSessionProvider.select((s) => s.account));
     if (user == null) return [];
     return _fetchRemote();
