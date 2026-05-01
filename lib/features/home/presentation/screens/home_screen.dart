@@ -79,15 +79,13 @@ class _ActualCityButton extends ConsumerWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: Text(
-                session.currentCity?.name ?? 'Cidade desconhecida',
-                overflow: .ellipsis,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: context.theme.colors.foreground,
-                ),
+            Text(
+              session.currentCity?.name ?? 'Selecione uma cidade',
+              overflow: .ellipsis,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: context.theme.colors.foreground,
               ),
             ),
             const SizedBox(width: 4),
