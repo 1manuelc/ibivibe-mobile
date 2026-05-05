@@ -2,6 +2,7 @@ import 'package:ibiapabaapp/core/logger/log_tags.dart';
 
 enum AuthAction implements LogTag {
   restore('[RESTORE]'),
+  restoreFromCache('[RESTORE_FROM_CACHE]'),
   initSession('[INIT_SESSION]'),
   logout('[LOGOUT]'),
   login('[LOGIN_WITH_EMAIL]'),

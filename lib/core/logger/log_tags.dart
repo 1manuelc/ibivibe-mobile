@@ -45,7 +45,8 @@ enum LogFeature implements LogTag {
   onboarding('[ONBOARDING]'),
   profiles('[PROFILES]'),
   location('[LOCATION]'),
-  search('[SEARCH]');
+  search('[SEARCH]'),
+  favorites('[FAVORITES]');
 
   @override
   final String tag;

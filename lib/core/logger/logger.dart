@@ -9,7 +9,7 @@ Logger logger(Ref ref) {
   return Logger(
     level: Level.values.firstWhere(
       (level) => level.name == dotenv.env['LOGGER_LEVEL'],
-      orElse: () => Level.info,
+      orElse: () => Level.error,
     ),
     printer: PrettyPrinter(
       methodCount: 2,

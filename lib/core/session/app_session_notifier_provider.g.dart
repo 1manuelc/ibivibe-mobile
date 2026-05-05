@@ -42,7 +42,7 @@ final class AppSessionNotifierProvider
 }
 
 String _$appSessionNotifierHash() =>
-    r'741d975a511b6d958c2121d3c0b3ee23fbb05ce3';
+    r'd657a48df194f8f1ecfeb4444229ae76df4603a2';
 
 abstract class _$AppSessionNotifier extends $Notifier<AppSession> {
   AppSession build();

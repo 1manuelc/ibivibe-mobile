@@ -6,6 +6,7 @@ import 'package:ibiapabaapp/core/logger/handlers/controller_log_handler.dart';
 import 'package:ibiapabaapp/core/logger/log_tags.dart';
 import 'package:ibiapabaapp/core/logger/logger.dart';
 import 'package:ibiapabaapp/core/session/app_session.dart';
+import 'package:ibiapabaapp/features/favorites/presentation/providers/favorites_state_provider.dart';
 import 'package:ibiapabaapp/features/profiles/presentation/providers/profile_state_provider.dart';
 import 'package:ibiapabaapp/features/search/presentation/providers/search_state_provider.dart';
 import 'package:logger/logger.dart';
@@ -29,6 +30,8 @@ class AppSessionNotifier extends _$AppSessionNotifier
     final preferences = ref.watch(userPreferencesStateProvider);
     final searches = ref.watch(searchStateProvider);
     final location = ref.watch(locationStateProvider);
+    // TODO: talvez os favoritos do perfil atual devam ser guardados na sessão como activeProfileFavorites?
+    ref.watch(favoritesStateProvider);
 
     return AppSession(
       account: authData.account,
@@ -51,6 +54,7 @@ class AppSessionNotifier extends _$AppSessionNotifier
       ]);
 
       await ref.read(profileStateProvider.notifier).restore();
+      await ref.read(favoritesStateProvider.notifier).restore();
       await Future.microtask(ref.invalidateSelf);
 
       logControllerSuccess(action: AppSessionAction.restore);

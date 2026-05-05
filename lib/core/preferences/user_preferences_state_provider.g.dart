@@ -42,7 +42,7 @@ final class UserPreferencesStateProvider
 }
 
 String _$userPreferencesStateHash() =>
-    r'20cc1a3b8a0021de671db9e057456d362cf137fb';
+    r'1f12f0f4c5908d8b2afda43f173d6295d11c367f';
 
 abstract class _$UserPreferencesState extends $Notifier<UserPreferences> {
   UserPreferences build();
