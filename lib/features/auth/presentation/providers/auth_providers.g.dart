@@ -57,6 +57,52 @@ final class AuthRemoteDatasourceProvider
 String _$authRemoteDatasourceHash() =>
     r'b484a51634f63672041f9242a72f467ba54cd754';
 
+@ProviderFor(authLocalStorage)
+final authLocalStorageProvider = AuthLocalStorageProvider._();
+
+final class AuthLocalStorageProvider
+    extends
+        $FunctionalProvider<
+          AuthLocalStorage,
+          AuthLocalStorage,
+          AuthLocalStorage
+        >
+    with $Provider<AuthLocalStorage> {
+  AuthLocalStorageProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'authLocalStorageProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$authLocalStorageHash();
+
+  @$internal
+  @override
+  $ProviderElement<AuthLocalStorage> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  AuthLocalStorage create(Ref ref) {
+    return authLocalStorage(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AuthLocalStorage value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AuthLocalStorage>(value),
+    );
+  }
+}
+
+String _$authLocalStorageHash() => r'7453788063e77ce24043a686797b86d474500963';
+
 @ProviderFor(authRepository)
 final authRepositoryProvider = AuthRepositoryProvider._();
 

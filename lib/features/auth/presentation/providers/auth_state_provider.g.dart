@@ -40,7 +40,7 @@ final class AuthStateProvider extends $NotifierProvider<AuthState, AuthData> {
   }
 }
 
-String _$authStateHash() => r'e9f38782b6cfff8448f3ad28d2970b97b2b6a7d4';
+String _$authStateHash() => r'44d3dd48bc5daf4e43dac5ebafb9a054b5bfcb27';
 
 abstract class _$AuthState extends $Notifier<AuthData> {
   AuthData build();
@@ -59,6 +59,47 @@ abstract class _$AuthState extends $Notifier<AuthData> {
     element.handleCreate(ref, build);
   }
 }
+
+@ProviderFor(currentAuthStatus)
+final currentAuthStatusProvider = CurrentAuthStatusProvider._();
+
+final class CurrentAuthStatusProvider
+    extends $FunctionalProvider<AuthStatus, AuthStatus, AuthStatus>
+    with $Provider<AuthStatus> {
+  CurrentAuthStatusProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentAuthStatusProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentAuthStatusHash();
+
+  @$internal
+  @override
+  $ProviderElement<AuthStatus> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  AuthStatus create(Ref ref) {
+    return currentAuthStatus(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AuthStatus value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AuthStatus>(value),
+    );
+  }
+}
+
+String _$currentAuthStatusHash() => r'a03c72fe361c136ee1ffeaa47c7c120879ff1cae';
 
 @ProviderFor(isAuthenticated)
 final isAuthenticatedProvider = IsAuthenticatedProvider._();

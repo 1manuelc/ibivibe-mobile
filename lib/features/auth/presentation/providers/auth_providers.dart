@@ -1,11 +1,14 @@
+import 'package:ibiapabaapp/core/cache/cache_database_provider.dart';
 import 'package:ibiapabaapp/core/logger/logger.dart';
 import 'package:ibiapabaapp/core/network/dio_provider.dart';
 import 'package:ibiapabaapp/core/storage/token_storage_provider.dart';
+import 'package:ibiapabaapp/features/auth/data/datasources/auth_local_storage.dart';
 import 'package:ibiapabaapp/features/auth/domain/repositories/auth_repository.dart';
 import 'package:ibiapabaapp/features/auth/domain/usecases/check_unique_availability.dart';
 import 'package:ibiapabaapp/features/auth/domain/usecases/get_me.dart';
 import 'package:ibiapabaapp/features/auth/domain/usecases/refresh_tokens.dart';
 import 'package:ibiapabaapp/features/auth/domain/usecases/register_with_email.dart';
+import 'package:ibiapabaapp/features/auth/infra/auth_local_storage_impl.dart';
 import 'package:ibiapabaapp/features/auth/presentation/controllers/login_controller.dart';
 import 'package:ibiapabaapp/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,6 +24,12 @@ AuthRemoteDatasourceImpl authRemoteDatasource(Ref ref) {
   final dio = ref.watch(dioProvider);
   final tokenStorage = ref.watch(tokenStorageProvider);
   return AuthRemoteDatasourceImpl(dio, tokenStorage);
+}
+
+@riverpod
+AuthLocalStorage authLocalStorage(Ref ref) {
+  final cacheService = ref.watch(cacheDatabaseServiceProvider);
+  return AuthLocalStorageImpl(cacheService);
 }
 
 @riverpod
