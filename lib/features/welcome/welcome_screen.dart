@@ -8,20 +8,18 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: FScaffold(
-        childPad: false,
-        child: Column(
-          mainAxisAlignment: .center,
-          spacing: 24,
-          children: [
-            WelcomeCarousel(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: WelcomeActions(),
-            ),
-          ],
-        ),
+    return const FScaffold(
+      childPad: false,
+      child: Column(
+        mainAxisAlignment: .center,
+        spacing: 24,
+        children: [
+          WelcomeCarousel(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: WelcomeActions(),
+          ),
+        ],
       ),
     );
   }

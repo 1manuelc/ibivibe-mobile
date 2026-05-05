@@ -41,7 +41,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
     if (state is LoginSuccess) {
       showAppToast(
         context: context,
-        icon: Icon(Icons.check),
+        icon: const Icon(Icons.check),
         title: Text(
           "Bem vindo(a) de volta!",
           style: TextStyle(color: context.theme.colors.foreground),

@@ -39,7 +39,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     setState(() => currentStep++);
     pageController.animateToPage(
       currentStep,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.ease,
     );
   }
@@ -49,7 +49,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       setState(() => currentStep--);
       pageController.animateToPage(
         currentStep,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
     }
@@ -69,7 +69,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       if (nextState.status == RegisterStatus.success) {
         showAppToast(
           context: context,
-          icon: Icon(Icons.check),
+          icon: const Icon(Icons.check),
           title: Text(
             "Bem vindo(a) ao IbiapabaApp!",
             style: TextStyle(color: context.theme.colors.foreground),
@@ -85,7 +85,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         showAppToast(
           context: context,
           icon: const Icon(Icons.gpp_maybe_outlined),
-          title: Text('Erro ao cadastrar'),
+          title: const Text('Erro ao cadastrar'),
           description: Text(nextState.errorMessage!),
           alignment: FToastAlignment.bottomCenter,
           duration: const Duration(seconds: 4),
@@ -108,7 +108,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               FButton.icon(
                 style: FButtonStyle.ghost(),
                 onPress: _handleBack,
-                child: Icon(Icons.arrow_back, size: 24),
+                child: const Icon(Icons.arrow_back, size: 24),
               ),
             ],
           ),
@@ -118,7 +118,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               Expanded(
                 child: PageView(
                   controller: pageController,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     BirthDateStep(onNext: next),
                     NameStep(onNext: next),
