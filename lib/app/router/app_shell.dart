@@ -50,7 +50,7 @@ class _AppShellState extends ConsumerState<AppShell> {
           _lastBackPressed = now;
 
           showAppToast(
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
             alignment: .bottomCenter,
             context: context,
             title: Text(
@@ -80,9 +80,9 @@ class _AppShellState extends ConsumerState<AppShell> {
             },
             child: hideNavbar
                 ? const SizedBox.shrink()
-                : SafeArea(
-                    key: const ValueKey('navbar'),
-                    child: const Navbar(),
+                : const SafeArea(
+                    key: ValueKey('navbar'),
+                    child: Navbar(),
                   ),
           ),
           body: widget.child,

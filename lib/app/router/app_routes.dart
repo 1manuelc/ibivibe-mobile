@@ -6,6 +6,7 @@ import 'package:ibiapabaapp/features/cities/presentation/routes/cities_routes.da
 import 'package:ibiapabaapp/features/events/presentation/routes/events_routes.dart';
 import 'package:ibiapabaapp/features/favorites/presentation/routes/favorites_routes.dart';
 import 'package:ibiapabaapp/features/home/presentation/routes/home_routes.dart';
+import 'package:ibiapabaapp/features/onboarding/presentation/routes/onboarding_routes.dart';
 import 'package:ibiapabaapp/features/profiles/presentation/routes/interests_routes.dart';
 import 'package:ibiapabaapp/features/profiles/presentation/routes/profiles_routes.dart';
 import 'package:ibiapabaapp/features/search/presentation/routes/search_routes.dart';
@@ -14,6 +15,7 @@ import 'package:ibiapabaapp/features/welcome/routes/welcome_routes.dart';
 
 final List<RouteBase> appRoutes = [
   ...welcomeRoutes,
+  ...onboardingRoutes,
   ...interestsRoutes,
   ...authRoutes,
   ShellRoute(

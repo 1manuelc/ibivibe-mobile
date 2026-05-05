@@ -8,13 +8,13 @@ final List<RouteBase> profilesRoutes = [
   GoRoute(
     path: '/app/profile',
     pageBuilder: (context, state) =>
-        FadeThroughPage(key: state.pageKey, child: ProfileScreen()),
+        FadeThroughPage(key: state.pageKey, child: const ProfileScreen()),
   ),
 
   // ─── Home > Profile > Settings ─────────────────────────────────────
   GoRoute(
     path: '/app/settings',
     pageBuilder: (context, state) =>
-        FadeThroughPage(key: state.pageKey, child: SettingsScreen()),
+        FadeThroughPage(key: state.pageKey, child: const SettingsScreen()),
   ),
 ];

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ibiapabaapp/app/router/app_routes.dart';
 import 'package:ibiapabaapp/core/preferences/user_preferences_state_provider.dart';
 import 'package:ibiapabaapp/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:ibiapabaapp/features/profiles/presentation/providers/profile_state_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router_provider.g.dart';
@@ -25,6 +26,7 @@ GoRouter appRouter(Ref ref) {
       final needsOnboarding = ref.read(
         userPreferencesStateProvider.select((p) => p.needsOnboarding),
       );
+      final hasProfiles = ref.read(profileStateProvider).profiles.isNotEmpty;
 
       final isLoggingIn =
           state.matchedLocation.startsWith('/welcome') ||
@@ -35,9 +37,10 @@ GoRouter appRouter(Ref ref) {
       }
 
       if (needsOnboarding &&
+          !hasProfiles &&
           !state.matchedLocation.startsWith('/onboarding') &&
           !state.matchedLocation.startsWith('/app/interests')) {
-        return '/onboarding';
+        return '/onboarding/newcomer';
       }
 
       if (isLoggingIn) {

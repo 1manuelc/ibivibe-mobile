@@ -10,7 +10,7 @@ final List<RouteBase> citiesRoutes = [
   GoRoute(
     path: '/app/cities',
     pageBuilder: (context, state) =>
-        FadeThroughPage(key: state.pageKey, child: CitiesOverviewScreen()),
+        FadeThroughPage(key: state.pageKey, child: const CitiesOverviewScreen()),
     routes: [
       // ─── Cities > :id ──────────────────────────────────────────────────────
       GoRoute(

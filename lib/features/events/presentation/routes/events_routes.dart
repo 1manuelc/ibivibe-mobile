@@ -10,7 +10,7 @@ final List<RouteBase> eventsRoutes = [
   GoRoute(
     path: '/app/events',
     pageBuilder: (context, state) =>
-        FadeThroughPage(key: state.pageKey, child: EventsOverviewScreen()),
+        FadeThroughPage(key: state.pageKey, child: const EventsOverviewScreen()),
     routes: [
       // ─── Events > :id ──────────────────────────────────────────────────────
       GoRoute(

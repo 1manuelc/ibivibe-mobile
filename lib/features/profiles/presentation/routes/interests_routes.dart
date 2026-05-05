@@ -9,7 +9,7 @@ final List<RouteBase> interestsRoutes = [
     path: '/app/interests/businesses',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: UserCompaniesInterestsScreen(),
+      child: const UserCompaniesInterestsScreen(),
       type: SharedAxisTransitionType.horizontal,
       duration: const Duration(milliseconds: 500),
     ),
@@ -19,7 +19,7 @@ final List<RouteBase> interestsRoutes = [
     path: '/app/interests/events',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: UserEventsInterestsScreen(),
+      child: const UserEventsInterestsScreen(),
       type: SharedAxisTransitionType.horizontal,
       duration: const Duration(milliseconds: 500),
     ),
