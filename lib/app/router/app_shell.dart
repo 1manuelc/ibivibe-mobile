@@ -30,7 +30,7 @@ class _AppShellState extends ConsumerState<AppShell> {
       '/app/events',
       '/app/search/expanded',
       '/app/settings',
-      '/app/under-development-notice',
+      '/app/beta',
       '/app/webview',
     ];
 
@@ -80,10 +80,7 @@ class _AppShellState extends ConsumerState<AppShell> {
             },
             child: hideNavbar
                 ? const SizedBox.shrink()
-                : const SafeArea(
-                    key: ValueKey('navbar'),
-                    child: Navbar(),
-                  ),
+                : const SafeArea(key: ValueKey('navbar'), child: Navbar()),
           ),
           body: widget.child,
         ),
