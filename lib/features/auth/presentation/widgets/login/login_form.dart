@@ -4,9 +4,9 @@ import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ibiapabaapp/features/auth/presentation/controllers/login_controller.dart';
 import 'package:ibiapabaapp/features/auth/validation/auth_validator.dart';
-import 'package:ibiapabaapp/app/theme/theme.dart';
 import 'package:ibiapabaapp/features/auth/presentation/states/login_state.dart';
 import 'package:ibiapabaapp/shared/ui/fragments/toast/show_app_toast.dart';
+import 'package:ibiapabaapp/shared/utils/show_todo_toast.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
   final LoginController controller;
@@ -90,8 +90,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         children: [
           FTextFormField.email(
             control: _emailControl,
-            style: (style) =>
-                style.withBaseFontSize(typography: context.theme.typography),
             label: const Text("Email"),
             hint: "exemplo@email.com",
             enabled: !isLoading,
@@ -101,8 +99,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
           FTextFormField.password(
             control: _passwordControl,
-            style: (style) =>
-                style.withBaseFontSize(typography: context.theme.typography),
             label: const Text("Senha"),
             hint: 'Senha',
             enabled: !isLoading,
@@ -112,17 +108,22 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             //     authValidator.validateField(AuthFields.password, v),
           ),
 
+          FButton.raw(
+            style: FButtonStyle.ghost(),
+            onPress: () {
+              showTodoToast(context, 'Recuperação de senha');
+            },
+            child: Text(
+              'Esqueci minha senha',
+              style: context.theme.typography.sm,
+            ),
+          ),
+
           const SizedBox(height: 8),
 
           FButton(
             onPress: isLoading ? null : _submit,
             child: Text(isLoading ? 'Entrando…' : 'Entrar'),
-          ),
-
-          FButton(
-            style: FButtonStyle.ghost(),
-            onPress: () => context.push('/auth/register'),
-            child: const Text('Criar conta'),
           ),
         ],
       ),

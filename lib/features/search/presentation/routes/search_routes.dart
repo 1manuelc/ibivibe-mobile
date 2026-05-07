@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ibiapabaapp/app/router/transitions/fade_through_page.dart';
+import 'package:ibiapabaapp/app/router/transitions/shared_axis_page.dart';
 import 'package:ibiapabaapp/features/search/presentation/screens/expanded_search_screen.dart';
 import 'package:ibiapabaapp/features/search/presentation/screens/search_screen.dart';
 
@@ -8,8 +8,11 @@ final List<RouteBase> searchRoutes = [
   // ─── Home > Search ─────────────────────────────────────────────────
   GoRoute(
     path: '/app/search',
-    pageBuilder: (context, state) =>
-        FadeThroughPage(key: state.pageKey, child: const SearchScreen()),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      type: .scaled,
+      child: const SearchScreen(),
+    ),
   ),
 
   // ─── Home > Search > ExpandedSearch ────────────────────────────────
