@@ -62,7 +62,7 @@ class EventCard extends StatelessWidget {
                       Text(
                         event.name,
                         style: context.theme.typography.sm.copyWith(
-                          fontWeight: .w600,
+                          fontWeight: .w500,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

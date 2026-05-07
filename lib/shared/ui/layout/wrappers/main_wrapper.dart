@@ -17,6 +17,8 @@ class MainWrapper extends StatelessWidget {
       child: Column(
         spacing: 24,
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: children,
       ),
     );
