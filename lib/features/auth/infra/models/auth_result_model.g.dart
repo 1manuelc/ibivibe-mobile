@@ -8,14 +8,14 @@ part of 'auth_result_model.dart';
 
 _AuthResultModel _$AuthResultModelFromJson(Map<String, dynamic> json) =>
     _AuthResultModel(
-      accessToken: json['accessToken'] as String,
-      refreshToken: json['refreshToken'] as String,
+      accessToken: json['access_token'] as String,
+      refreshToken: json['refresh_token'] as String,
       account: AccountModel.fromJson(json['account'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AuthResultModelToJson(_AuthResultModel instance) =>
     <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
+      'access_token': instance.accessToken,
+      'refresh_token': instance.refreshToken,
       'account': instance.account,
     };

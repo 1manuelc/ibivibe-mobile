@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
-import 'package:ibiapabaapp/app/theme/theme.dart';
 
 Future<String?> showCustomCodeDialog({
   required BuildContext context,
@@ -49,8 +48,6 @@ Future<String?> showCustomCodeDialog({
               FilteringTextInputFormatter.allow(RegExp(r'[\d+]')),
               LengthLimitingTextInputFormatter(5),
             ],
-            style: (style) =>
-                style.withBaseFontSize(typography: context.theme.typography),
             onSubmit: (_) => submit(),
           ),
         ],

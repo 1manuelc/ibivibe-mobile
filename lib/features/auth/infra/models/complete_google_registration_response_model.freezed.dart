@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'auth_result_model.dart';
+part of 'complete_google_registration_response_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'auth_result_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AuthResultModel {
+mixin _$CompleteGoogleRegistrationResponseModel {
 
 @JsonKey(name: 'access_token') String get accessToken;@JsonKey(name: 'refresh_token') String get refreshToken; AccountModel get account;
-/// Create a copy of AuthResultModel
+/// Create a copy of CompleteGoogleRegistrationResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$AuthResultModelCopyWith<AuthResultModel> get copyWith => _$AuthResultModelCopyWithImpl<AuthResultModel>(this as AuthResultModel, _$identity);
+$CompleteGoogleRegistrationResponseModelCopyWith<CompleteGoogleRegistrationResponseModel> get copyWith => _$CompleteGoogleRegistrationResponseModelCopyWithImpl<CompleteGoogleRegistrationResponseModel>(this as CompleteGoogleRegistrationResponseModel, _$identity);
 
-  /// Serializes this AuthResultModel to a JSON map.
+  /// Serializes this CompleteGoogleRegistrationResponseModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthResultModel&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.account, account) || other.account == account));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CompleteGoogleRegistrationResponseModel&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.account, account) || other.account == account));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,accessToken,refreshToken,account);
 
 @override
 String toString() {
-  return 'AuthResultModel(accessToken: $accessToken, refreshToken: $refreshToken, account: $account)';
+  return 'CompleteGoogleRegistrationResponseModel(accessToken: $accessToken, refreshToken: $refreshToken, account: $account)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AuthResultModelCopyWith<$Res>  {
-  factory $AuthResultModelCopyWith(AuthResultModel value, $Res Function(AuthResultModel) _then) = _$AuthResultModelCopyWithImpl;
+abstract mixin class $CompleteGoogleRegistrationResponseModelCopyWith<$Res>  {
+  factory $CompleteGoogleRegistrationResponseModelCopyWith(CompleteGoogleRegistrationResponseModel value, $Res Function(CompleteGoogleRegistrationResponseModel) _then) = _$CompleteGoogleRegistrationResponseModelCopyWithImpl;
 @useResult
 $Res call({
 @JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'refresh_token') String refreshToken, AccountModel account
@@ -56,14 +56,14 @@ $AccountModelCopyWith<$Res> get account;
 
 }
 /// @nodoc
-class _$AuthResultModelCopyWithImpl<$Res>
-    implements $AuthResultModelCopyWith<$Res> {
-  _$AuthResultModelCopyWithImpl(this._self, this._then);
+class _$CompleteGoogleRegistrationResponseModelCopyWithImpl<$Res>
+    implements $CompleteGoogleRegistrationResponseModelCopyWith<$Res> {
+  _$CompleteGoogleRegistrationResponseModelCopyWithImpl(this._self, this._then);
 
-  final AuthResultModel _self;
-  final $Res Function(AuthResultModel) _then;
+  final CompleteGoogleRegistrationResponseModel _self;
+  final $Res Function(CompleteGoogleRegistrationResponseModel) _then;
 
-/// Create a copy of AuthResultModel
+/// Create a copy of CompleteGoogleRegistrationResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? refreshToken = null,Object? account = null,}) {
   return _then(_self.copyWith(
@@ -73,7 +73,7 @@ as String,account: null == account ? _self.account : account // ignore: cast_nul
 as AccountModel,
   ));
 }
-/// Create a copy of AuthResultModel
+/// Create a copy of CompleteGoogleRegistrationResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -86,8 +86,8 @@ $AccountModelCopyWith<$Res> get account {
 }
 
 
-/// Adds pattern-matching-related methods to [AuthResultModel].
-extension AuthResultModelPatterns on AuthResultModel {
+/// Adds pattern-matching-related methods to [CompleteGoogleRegistrationResponseModel].
+extension CompleteGoogleRegistrationResponseModelPatterns on CompleteGoogleRegistrationResponseModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -100,10 +100,10 @@ extension AuthResultModelPatterns on AuthResultModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AuthResultModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CompleteGoogleRegistrationResponseModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _AuthResultModel() when $default != null:
+case _CompleteGoogleRegistrationResponseModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -122,10 +122,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AuthResultModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CompleteGoogleRegistrationResponseModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _AuthResultModel():
+case _CompleteGoogleRegistrationResponseModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -143,10 +143,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AuthResultModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CompleteGoogleRegistrationResponseModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _AuthResultModel() when $default != null:
+case _CompleteGoogleRegistrationResponseModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -166,7 +166,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'refresh_token')  String refreshToken,  AccountModel account)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _AuthResultModel() when $default != null:
+case _CompleteGoogleRegistrationResponseModel() when $default != null:
 return $default(_that.accessToken,_that.refreshToken,_that.account);case _:
   return orElse();
 
@@ -187,7 +187,7 @@ return $default(_that.accessToken,_that.refreshToken,_that.account);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'refresh_token')  String refreshToken,  AccountModel account)  $default,) {final _that = this;
 switch (_that) {
-case _AuthResultModel():
+case _CompleteGoogleRegistrationResponseModel():
 return $default(_that.accessToken,_that.refreshToken,_that.account);case _:
   throw StateError('Unexpected subclass');
 
@@ -207,7 +207,7 @@ return $default(_that.accessToken,_that.refreshToken,_that.account);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'refresh_token')  String refreshToken,  AccountModel account)?  $default,) {final _that = this;
 switch (_that) {
-case _AuthResultModel() when $default != null:
+case _CompleteGoogleRegistrationResponseModel() when $default != null:
 return $default(_that.accessToken,_that.refreshToken,_that.account);case _:
   return null;
 
@@ -219,28 +219,28 @@ return $default(_that.accessToken,_that.refreshToken,_that.account);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _AuthResultModel implements AuthResultModel {
-  const _AuthResultModel({@JsonKey(name: 'access_token') required this.accessToken, @JsonKey(name: 'refresh_token') required this.refreshToken, required this.account});
-  factory _AuthResultModel.fromJson(Map<String, dynamic> json) => _$AuthResultModelFromJson(json);
+class _CompleteGoogleRegistrationResponseModel extends CompleteGoogleRegistrationResponseModel {
+  const _CompleteGoogleRegistrationResponseModel({@JsonKey(name: 'access_token') required this.accessToken, @JsonKey(name: 'refresh_token') required this.refreshToken, required this.account}): super._();
+  factory _CompleteGoogleRegistrationResponseModel.fromJson(Map<String, dynamic> json) => _$CompleteGoogleRegistrationResponseModelFromJson(json);
 
 @override@JsonKey(name: 'access_token') final  String accessToken;
 @override@JsonKey(name: 'refresh_token') final  String refreshToken;
 @override final  AccountModel account;
 
-/// Create a copy of AuthResultModel
+/// Create a copy of CompleteGoogleRegistrationResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$AuthResultModelCopyWith<_AuthResultModel> get copyWith => __$AuthResultModelCopyWithImpl<_AuthResultModel>(this, _$identity);
+_$CompleteGoogleRegistrationResponseModelCopyWith<_CompleteGoogleRegistrationResponseModel> get copyWith => __$CompleteGoogleRegistrationResponseModelCopyWithImpl<_CompleteGoogleRegistrationResponseModel>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$AuthResultModelToJson(this, );
+  return _$CompleteGoogleRegistrationResponseModelToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthResultModel&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.account, account) || other.account == account));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CompleteGoogleRegistrationResponseModel&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.account, account) || other.account == account));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -249,15 +249,15 @@ int get hashCode => Object.hash(runtimeType,accessToken,refreshToken,account);
 
 @override
 String toString() {
-  return 'AuthResultModel(accessToken: $accessToken, refreshToken: $refreshToken, account: $account)';
+  return 'CompleteGoogleRegistrationResponseModel(accessToken: $accessToken, refreshToken: $refreshToken, account: $account)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$AuthResultModelCopyWith<$Res> implements $AuthResultModelCopyWith<$Res> {
-  factory _$AuthResultModelCopyWith(_AuthResultModel value, $Res Function(_AuthResultModel) _then) = __$AuthResultModelCopyWithImpl;
+abstract mixin class _$CompleteGoogleRegistrationResponseModelCopyWith<$Res> implements $CompleteGoogleRegistrationResponseModelCopyWith<$Res> {
+  factory _$CompleteGoogleRegistrationResponseModelCopyWith(_CompleteGoogleRegistrationResponseModel value, $Res Function(_CompleteGoogleRegistrationResponseModel) _then) = __$CompleteGoogleRegistrationResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
 @JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'refresh_token') String refreshToken, AccountModel account
@@ -268,17 +268,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$AuthResultModelCopyWithImpl<$Res>
-    implements _$AuthResultModelCopyWith<$Res> {
-  __$AuthResultModelCopyWithImpl(this._self, this._then);
+class __$CompleteGoogleRegistrationResponseModelCopyWithImpl<$Res>
+    implements _$CompleteGoogleRegistrationResponseModelCopyWith<$Res> {
+  __$CompleteGoogleRegistrationResponseModelCopyWithImpl(this._self, this._then);
 
-  final _AuthResultModel _self;
-  final $Res Function(_AuthResultModel) _then;
+  final _CompleteGoogleRegistrationResponseModel _self;
+  final $Res Function(_CompleteGoogleRegistrationResponseModel) _then;
 
-/// Create a copy of AuthResultModel
+/// Create a copy of CompleteGoogleRegistrationResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? refreshToken = null,Object? account = null,}) {
-  return _then(_AuthResultModel(
+  return _then(_CompleteGoogleRegistrationResponseModel(
 accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
 as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
 as String,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
@@ -286,7 +286,7 @@ as AccountModel,
   ));
 }
 
-/// Create a copy of AuthResultModel
+/// Create a copy of CompleteGoogleRegistrationResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

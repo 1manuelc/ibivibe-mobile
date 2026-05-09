@@ -45,19 +45,19 @@ class RegisterController extends _$RegisterController
     );
   }
 
-  void setUsername(String v) {
+  void setSlug(String v) {
     final availability =
         Map<
           AvailabilityField,
           ({bool? available, String? error, bool isChecking})
         >.from(state.availability);
-    availability[AvailabilityField.username] = (
+    availability[AvailabilityField.slug] = (
       available: null,
       error: null,
       isChecking: false,
     );
     state = state.copyWith(
-      formData: state.formData.copyWithField(AuthFields.username, v),
+      formData: state.formData.copyWithField(AuthFields.slug, v),
       availability: availability,
     );
   }
@@ -163,8 +163,8 @@ class RegisterController extends _$RegisterController
     );
   }
 
-  Future<bool> checkUsername(String v) =>
-      _validateUnique(AvailabilityField.username, v);
+  Future<bool> checkSlug(String v) =>
+      _validateUnique(AvailabilityField.slug, v);
   Future<bool> checkEmail(String v) =>
       _validateUnique(AvailabilityField.email, v);
   Future<bool> checkPhone(String v) =>

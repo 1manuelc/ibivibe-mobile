@@ -6,7 +6,7 @@ import 'package:ibiapabaapp/core/validation/base_validator.dart';
 enum AuthFields {
   name,
   email,
-  username,
+  slug,
   password,
   confirmPassword,
   birthDate,
@@ -31,8 +31,8 @@ class AuthValidator extends BaseValidator<AuthFields> {
             message: 'E-mail inválido',
           ),
 
-          // ─── username ──────────────────────────────────────────────────────
-          AuthFields.username: acanthis
+          // ─── slug ──────────────────────────────────────────────────────
+          AuthFields.slug: acanthis
               .string()
               .trim()
               .min(4, message: 'Mínimo de 4 caracteres')

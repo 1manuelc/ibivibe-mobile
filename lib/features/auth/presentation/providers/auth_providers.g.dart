@@ -361,6 +361,97 @@ final class CheckUniqueAvailabilityProvider
 String _$checkUniqueAvailabilityHash() =>
     r'c2e64eb16705b8880f6a489f5b7baff4f8e6d15f';
 
+@ProviderFor(loginWithGoogle)
+final loginWithGoogleProvider = LoginWithGoogleProvider._();
+
+final class LoginWithGoogleProvider
+    extends
+        $FunctionalProvider<LoginWithGoogle, LoginWithGoogle, LoginWithGoogle>
+    with $Provider<LoginWithGoogle> {
+  LoginWithGoogleProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'loginWithGoogleProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$loginWithGoogleHash();
+
+  @$internal
+  @override
+  $ProviderElement<LoginWithGoogle> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  LoginWithGoogle create(Ref ref) {
+    return loginWithGoogle(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(LoginWithGoogle value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<LoginWithGoogle>(value),
+    );
+  }
+}
+
+String _$loginWithGoogleHash() => r'bdd9317a45d90eed388aaf7dfccdd8aba299e66d';
+
+@ProviderFor(completeGoogleRegistration)
+final completeGoogleRegistrationProvider =
+    CompleteGoogleRegistrationProvider._();
+
+final class CompleteGoogleRegistrationProvider
+    extends
+        $FunctionalProvider<
+          CompleteGoogleRegistration,
+          CompleteGoogleRegistration,
+          CompleteGoogleRegistration
+        >
+    with $Provider<CompleteGoogleRegistration> {
+  CompleteGoogleRegistrationProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'completeGoogleRegistrationProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$completeGoogleRegistrationHash();
+
+  @$internal
+  @override
+  $ProviderElement<CompleteGoogleRegistration> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CompleteGoogleRegistration create(Ref ref) {
+    return completeGoogleRegistration(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CompleteGoogleRegistration value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CompleteGoogleRegistration>(value),
+    );
+  }
+}
+
+String _$completeGoogleRegistrationHash() =>
+    r'0c42fe7a7265f32c8ac8521263a8194ff04247f2';
+
 @ProviderFor(loginController)
 final loginControllerProvider = LoginControllerProvider._();
 

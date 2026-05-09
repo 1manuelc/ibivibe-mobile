@@ -20,7 +20,7 @@ class RegisterState {
     status: RegisterStatus.initial,
     formData: RegisterFormData(),
     availability: {
-      AvailabilityField.username: (available: null, error: null, isChecking: false),
+      AvailabilityField.slug: (available: null, error: null, isChecking: false),
       AvailabilityField.email: (available: null, error: null, isChecking: false),
       AvailabilityField.phoneNumber: (available: null, error: null, isChecking: false),
     },

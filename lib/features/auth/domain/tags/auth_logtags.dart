@@ -10,7 +10,8 @@ enum AuthAction implements LogTag {
   refreshTokens('[REFRESH_TOKENS]'),
   getMe('[GET_ME]'),
   checkAvailability('[CHECK_AVAILABILITY]'),
-  getAccountProfiles('[GET_ACCOUNT_PROFILES]');
+  loginWithGoogle('[LOGIN_WITH_GOOGLE]'),
+  completeGoogleRegistration('[COMPLETE_GOOGLE_REGISTRATION]');
   // setUserInterests('[SET_USER_INTERESTS]'),
   // switchProfile('[SWITCH_PROFILE]'),
   // getAccountProfiles('[GET_ACCOUNT_PROFILES]');

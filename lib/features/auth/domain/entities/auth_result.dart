@@ -1,5 +1,5 @@
 import 'package:ibiapabaapp/core/storage/token_response.dart';
-import 'package:ibiapabaapp/features/auth/domain/entities/account.dart';
+import 'package:ibiapabaapp/features/accounts/domain/entities/account.dart';
 
 class AuthResult implements TokenResponse {
   @override

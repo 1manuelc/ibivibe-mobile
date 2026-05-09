@@ -4,14 +4,11 @@ import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ibiapabaapp/features/auth/presentation/controllers/register_controller.dart';
 import 'package:ibiapabaapp/features/auth/presentation/states/register_state.dart';
-import 'package:ibiapabaapp/features/auth/presentation/widgets/register/steps/birth_date_step.dart';
 import 'package:ibiapabaapp/features/auth/presentation/widgets/register/steps/email_step.dart';
 import 'package:ibiapabaapp/features/auth/presentation/widgets/register/steps/name_step.dart';
 import 'package:ibiapabaapp/features/auth/presentation/widgets/register/steps/password_step.dart';
-import 'package:ibiapabaapp/features/auth/presentation/widgets/register/steps/phone_step/phone_step.dart';
-import 'package:ibiapabaapp/features/auth/presentation/widgets/register/steps/username_step.dart';
 import 'package:ibiapabaapp/shared/ui/fragments/toast/show_app_toast.dart';
-import 'package:ibiapabaapp/shared/ui/layout/step_dots.dart';
+import 'package:ibiapabaapp/shared/ui/layout/beautiful_background_overlay.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -70,10 +67,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         showAppToast(
           context: context,
           icon: const Icon(Icons.check),
-          title: Text(
-            "Bem vindo(a) ao IbiapabaApp!",
-            style: TextStyle(color: context.theme.colors.foreground),
-          ),
+          title: "Bem vindo(a) ao IbiapabaApp!",
           alignment: FToastAlignment.bottomCenter,
           duration: const Duration(seconds: 4),
         );
@@ -85,8 +79,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         showAppToast(
           context: context,
           icon: const Icon(Icons.gpp_maybe_outlined),
-          title: const Text('Erro ao cadastrar'),
-          description: Text(nextState.errorMessage!),
+          title: 'Erro ao cadastrar',
+          description: nextState.errorMessage!,
           alignment: FToastAlignment.bottomCenter,
           duration: const Duration(seconds: 4),
         );
@@ -114,25 +108,27 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ),
           child: Column(
             children: [
-              StepDots(current: currentStep, total: 6),
               Expanded(
-                child: PageView(
-                  controller: pageController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    BirthDateStep(onNext: next),
-                    NameStep(onNext: next),
-                    PhoneStep(onNext: next),
-                    UsernameStep(onNext: next),
-                    EmailStep(onNext: next),
-                    PasswordStep(
-                      onSubmit: () async {
-                        await ref
-                            .read(registerControllerProvider.notifier)
-                            .submit();
-                      },
-                    ),
-                  ],
+                child: BeautifulBackgroundOverlay(
+                  opacity: 0.1,
+                  child: PageView(
+                    controller: pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      // BirthDateStep(onNext: next),
+                      NameStep(onNext: next),
+                      EmailStep(onNext: next),
+                      // PhoneStep(onNext: next),
+                      // UsernameStep(onNext: next),
+                      PasswordStep(
+                        onSubmit: () async {
+                          await ref
+                              .read(registerControllerProvider.notifier)
+                              .submit();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

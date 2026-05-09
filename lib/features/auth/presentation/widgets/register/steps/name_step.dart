@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
-import 'package:ibiapabaapp/app/theme/theme.dart';
 import 'package:ibiapabaapp/features/auth/presentation/controllers/register_controller.dart';
 import 'package:ibiapabaapp/features/auth/validation/auth_validator.dart';
 
@@ -52,8 +51,6 @@ class _NameStepState extends ConsumerState<NameStep> {
 
             FTextFormField(
               control: _nameControl,
-              style: (style) =>
-                  style.withBaseFontSize(typography: context.theme.typography),
               hint: 'Seu nome e sobrenome',
               autovalidateMode: AutovalidateMode.onUnfocus,
               validator: (v) => authValidator.validateField(.name, v),

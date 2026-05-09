@@ -42,10 +42,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       showAppToast(
         context: context,
         icon: const Icon(Icons.check),
-        title: Text(
-          "Bem vindo(a) de volta!",
-          style: TextStyle(color: context.theme.colors.foreground),
-        ),
+        title: "Bem vindo(a) de volta!",
         alignment: FToastAlignment.bottomCenter,
         duration: const Duration(seconds: 4),
       );
@@ -56,8 +53,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       showAppToast(
         context: context,
         icon: const Icon(Icons.gpp_maybe_outlined),
-        title: const Text('Erro ao fazer login'),
-        description: Text(state.message),
+        title: 'Erro ao fazer login',
+        description: state.message,
         alignment: FToastAlignment.bottomCenter,
         duration: const Duration(seconds: 4),
       );

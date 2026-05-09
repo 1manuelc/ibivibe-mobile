@@ -1,80 +1,129 @@
 import 'package:ibiapabaapp/features/auth/validation/auth_validator.dart';
+import '../../../accounts/domain/entities/account_type.dart';
+import '../../../accounts/domain/entities/account_business.dart';
 
 class RegisterFormData {
   String name;
-  String username;
+  String slug;
+  String displayName;
   String email;
   String phoneNumber;
   String password;
   String confirmPassword;
-  DateTime? birthDate;
-  String role;
+  String? bio;
+  String? avatarUrl;
+  AccountType type;
+  AccountBusiness? businessData; // Only if type == business
 
   RegisterFormData({
     this.name = '',
-    this.username = '',
+    this.slug = '',
+    this.displayName = '',
     this.email = '',
     this.phoneNumber = '',
     this.password = '',
     this.confirmPassword = '',
-    this.birthDate,
-    this.role = 'user',
+    this.bio,
+    this.avatarUrl,
+    this.type = AccountType.personal,
+    this.businessData,
   });
 
   factory RegisterFormData.fromMap(Map<String, dynamic> map) {
     return RegisterFormData(
       name: map[AuthFields.name.name] ?? '',
-      username: map[AuthFields.username.name] ?? '',
+      slug: map['slug'] ?? '',
+      displayName: map['display_name'] ?? '',
       email: map[AuthFields.email.name] ?? '',
       phoneNumber: map[AuthFields.phoneNumber.name] ?? '',
       password: map[AuthFields.password.name] ?? '',
       confirmPassword: map[AuthFields.confirmPassword.name] ?? '',
-      birthDate: _parseDate(map[AuthFields.birthDate.name]),
-      role: map['role'] ?? 'user',
+      bio: map['bio'],
+      avatarUrl: map['avatar_url'],
+      type: map['type'] != null
+          ? AccountType.fromString(map['type'])
+          : AccountType.personal,
+      businessData: map['business_data'] != null
+          ? AccountBusiness(
+              name: map['business_data']['name'],
+              document: map['business_data']['document'],
+              description: map['business_data']['description'],
+              website: map['business_data']['website'],
+              address: map['business_data']['address'],
+              phone: map['business_data']['phone'],
+              category: map['business_data']['category'],
+            )
+          : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'username': username,
+      'slug': slug,
+      'display_name': displayName,
       'email': email,
       'phone_number': phoneNumber,
       'password': password,
       'password_confirm': confirmPassword,
-      'birth_date': birthDate?.toIso8601String(),
-      'role': role,
+      'bio': bio,
+      'avatar_url': avatarUrl,
+      'type': type.value,
+      if (businessData != null)
+        'business_data': {
+          'name': businessData!.name,
+          'document': businessData!.document,
+          'description': businessData!.description,
+          'website': businessData!.website,
+          'address': businessData!.address,
+          'phone': businessData!.phone,
+          'category': businessData!.category,
+        },
     };
   }
 
-  static DateTime? _parseDate(dynamic value) {
-    if (value == null) return null;
-    if (value is DateTime) return value;
-    try {
-      final parts = value.toString().split('/');
-      if (parts.length == 3) {
-        return DateTime(
-          int.parse(parts[2]), // Ano
-          int.parse(parts[1]), // Mês
-          int.parse(parts[0]), // Dia
-        );
-      }
-    } catch (_) {}
-    return null;
+  RegisterFormData copyWith({
+    String? name,
+    String? slug,
+    String? displayName,
+    String? email,
+    String? phoneNumber,
+    String? password,
+    String? confirmPassword,
+    String? bio,
+    String? avatarUrl,
+    AccountType? type,
+    AccountBusiness? businessData,
+  }) {
+    return RegisterFormData(
+      name: name ?? this.name,
+      slug: slug ?? this.slug,
+      displayName: displayName ?? this.displayName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+      bio: bio ?? this.bio,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      type: type ?? this.type,
+      businessData: businessData ?? this.businessData,
+    );
   }
 
   RegisterFormData copyWithField(AuthFields field, dynamic value) {
-    return RegisterFormData(
-      name: field == AuthFields.name ? value : name,
-      username: field == AuthFields.username ? value : username,
-      email: field == AuthFields.email ? value : email,
-      phoneNumber: field == AuthFields.phoneNumber ? value : phoneNumber,
-      password: field == AuthFields.password ? value : password,
-      confirmPassword: field == AuthFields.confirmPassword
-          ? value
-          : confirmPassword,
-      birthDate: field == AuthFields.birthDate ? value : birthDate,
-      role: role,
-    );
+    switch (field) {
+      case AuthFields.name:
+        return copyWith(name: value);
+      case AuthFields.email:
+        return copyWith(email: value);
+      case AuthFields.phoneNumber:
+        return copyWith(phoneNumber: value);
+      case AuthFields.password:
+        return copyWith(password: value);
+      case AuthFields.confirmPassword:
+        return copyWith(confirmPassword: value);
+      default:
+        return this;
+    }
   }
 }

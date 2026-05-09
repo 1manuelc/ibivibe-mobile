@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
-import 'package:ibiapabaapp/app/theme/theme.dart';
 import 'package:ibiapabaapp/features/auth/presentation/controllers/register_controller.dart';
 import 'package:ibiapabaapp/features/auth/presentation/states/register_state.dart';
 import 'package:ibiapabaapp/features/auth/validation/auth_validator.dart';
@@ -9,10 +8,7 @@ import 'package:ibiapabaapp/features/auth/validation/auth_validator.dart';
 class PasswordStep extends ConsumerStatefulWidget {
   final VoidCallback onSubmit;
 
-  const PasswordStep({
-    super.key,
-    required this.onSubmit,
-  });
+  const PasswordStep({super.key, required this.onSubmit});
 
   @override
   ConsumerState<PasswordStep> createState() => _PasswordStepState();
@@ -28,10 +24,13 @@ class _PasswordStepState extends ConsumerState<PasswordStep> {
   void initState() {
     super.initState();
     _passwordControl = FTextFieldControl.managed(
-      onChange: (v) => ref.read(registerControllerProvider.notifier).setPassword(v.text),
+      onChange: (v) =>
+          ref.read(registerControllerProvider.notifier).setPassword(v.text),
     );
     _confirmPasswordControl = FTextFieldControl.managed(
-      onChange: (v) => ref.read(registerControllerProvider.notifier).setConfirmPassword(v.text),
+      onChange: (v) => ref
+          .read(registerControllerProvider.notifier)
+          .setConfirmPassword(v.text),
     );
   }
 
@@ -44,7 +43,9 @@ class _PasswordStepState extends ConsumerState<PasswordStep> {
   @override
   Widget build(BuildContext context) {
     final authValidator = ref.watch(authValidatorProvider);
-    final status = ref.watch(registerControllerProvider.select((s) => s.status));
+    final status = ref.watch(
+      registerControllerProvider.select((s) => s.status),
+    );
     final isLoading = status == RegisterStatus.loading;
 
     return Padding(
@@ -69,24 +70,22 @@ class _PasswordStepState extends ConsumerState<PasswordStep> {
 
             FTextFormField.password(
               control: _passwordControl,
-              style: (style) =>
-                  style.withBaseFontSize(typography: context.theme.typography),
               label: const Text('Senha'),
               hint: 'Mínimo 8 caracteres',
               enabled: !isLoading,
               autovalidateMode: AutovalidateMode.onUnfocus,
-              validator: (v) => authValidator.validateField(AuthFields.password, v),
+              validator: (v) =>
+                  authValidator.validateField(AuthFields.password, v),
             ),
 
             FTextFormField.password(
               control: _confirmPasswordControl,
-              style: (style) =>
-                  style.withBaseFontSize(typography: context.theme.typography),
               label: const Text('Confirmar senha'),
               hint: 'Digite novamente',
               enabled: !isLoading,
               autovalidateMode: AutovalidateMode.onUnfocus,
-              validator: (v) => authValidator.validateField(AuthFields.confirmPassword, v),
+              validator: (v) =>
+                  authValidator.validateField(AuthFields.confirmPassword, v),
               onSubmit: (_) => _submit(),
             ),
 

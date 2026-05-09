@@ -27,7 +27,8 @@ class LoginScreen extends ConsumerWidget {
           ],
         ),
         child: BeautifulBackgroundOverlay(
-          opacity: 0.16,
+          childBelow: true,
+          opacity: 0.12,
           alignment: .bottomCenter,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),

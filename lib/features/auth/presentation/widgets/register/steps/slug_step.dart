@@ -2,44 +2,43 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
-import 'package:ibiapabaapp/app/theme/theme.dart';
 import 'package:ibiapabaapp/features/auth/domain/entities/check_availability.dart';
 import 'package:ibiapabaapp/features/auth/presentation/controllers/register_controller.dart';
 import 'package:ibiapabaapp/features/auth/validation/auth_validator.dart';
 import 'package:ibiapabaapp/shared/ui/layout/availability_suffix.dart';
 
-class UsernameStep extends ConsumerStatefulWidget {
+class SlugStep extends ConsumerStatefulWidget {
   final VoidCallback onNext;
 
-  const UsernameStep({super.key, required this.onNext});
+  const SlugStep({super.key, required this.onNext});
 
   @override
-  ConsumerState<UsernameStep> createState() => _UsernameStepState();
+  ConsumerState<SlugStep> createState() => _SlugStepState();
 }
 
-class _UsernameStepState extends ConsumerState<UsernameStep> {
+class _SlugStepState extends ConsumerState<SlugStep> {
   final _formKey = GlobalKey<FormState>();
 
-  String _userName = '';
+  String _slug = '';
   Timer? _debounce;
   String? _errorText;
   String? _successText;
 
-  final RegExp _usernameRegex = RegExp(
+  final RegExp _slugRegex = RegExp(
     r'^(?=.{4,30}$)(?![._])(?!.*[._]{2})[a-zA-Z0-9._]+(?<![._])$',
   );
 
-  late final FTextFieldControl _userNameControl;
+  late final FTextFieldControl _slugControl;
 
   @override
   void initState() {
     super.initState();
-    _userName = ref.read(registerControllerProvider).formData.username;
+    _slug = ref.read(registerControllerProvider).formData.slug;
 
-    _userNameControl = FTextFieldControl.managed(
+    _slugControl = FTextFieldControl.managed(
       onChange: (v) {
-        _userName = v.text.trim();
-        _onUsernameChanged(_userName);
+        _slug = v.text.trim();
+        _onSlugChanged(_slug);
       },
     );
   }
@@ -50,7 +49,7 @@ class _UsernameStepState extends ConsumerState<UsernameStep> {
     super.dispose();
   }
 
-  void _onUsernameChanged(String value) {
+  void _onSlugChanged(String value) {
     _debounce?.cancel();
 
     setState(() {
@@ -59,10 +58,10 @@ class _UsernameStepState extends ConsumerState<UsernameStep> {
     });
 
     final notifier = ref.read(registerControllerProvider.notifier);
-    notifier.setUsername(value);
+    notifier.setSlug(value);
 
     final trimmed = value.trim();
-    if (!_usernameRegex.hasMatch(trimmed)) {
+    if (!_slugRegex.hasMatch(trimmed)) {
       return;
     }
 
@@ -71,19 +70,19 @@ class _UsernameStepState extends ConsumerState<UsernameStep> {
     });
   }
 
-  Future<void> _checkUsernameAvailability(String username) async {
+  Future<void> _checkUsernameAvailability(String slug) async {
     setState(() {
       _errorText = null;
       _successText = null;
     });
 
     final notifier = ref.read(registerControllerProvider.notifier);
-    final available = await notifier.checkUsername(username);
+    final available = await notifier.checkSlug(slug);
 
     if (!mounted) return;
 
     setState(() {
-      final fieldError = notifier.getError(AvailabilityField.username);
+      final fieldError = notifier.getError(AvailabilityField.slug);
       if (fieldError != null) {
         _errorText = fieldError;
       } else if (available == false) {
@@ -102,11 +101,11 @@ class _UsernameStepState extends ConsumerState<UsernameStep> {
 
     final isAvailable = ref
         .read(registerControllerProvider)
-        .availability[AvailabilityField.username]
+        .availability[AvailabilityField.slug]
         ?.available;
     if (isAvailable != true) return;
 
-    ref.read(registerControllerProvider.notifier).setUsername(_userName);
+    ref.read(registerControllerProvider.notifier).setSlug(_slug);
     widget.onNext();
   }
 
@@ -115,7 +114,7 @@ class _UsernameStepState extends ConsumerState<UsernameStep> {
     final authValidator = ref.watch(authValidatorProvider);
     final availability = ref.watch(
       registerControllerProvider.select(
-        (s) => s.availability[AvailabilityField.username],
+        (s) => s.availability[AvailabilityField.slug],
       ),
     );
 
@@ -126,7 +125,7 @@ class _UsernameStepState extends ConsumerState<UsernameStep> {
         isAvailable == true &&
         !isChecking &&
         _errorText == null &&
-        _userName.isNotEmpty;
+        _slug.isNotEmpty;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -164,13 +163,10 @@ class _UsernameStepState extends ConsumerState<UsernameStep> {
                 isAvailable: isAvailable,
                 isChecking: isChecking,
               ),
-              control: _userNameControl,
-              style: (style) =>
-                  style.withBaseFontSize(typography: context.theme.typography),
+              control: _slugControl,
               hint: 'Seu nome de usuário',
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (v) =>
-                  authValidator.validateField(AuthFields.username, v),
+              validator: (v) => authValidator.validateField(AuthFields.slug, v),
               onSubmit: (_) => _submit(),
             ),
 

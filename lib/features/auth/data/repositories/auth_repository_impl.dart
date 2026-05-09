@@ -4,10 +4,14 @@ import 'package:ibiapabaapp/core/logger/log_tags.dart';
 import 'package:ibiapabaapp/core/logger/handlers/repository_log_handler.dart';
 import 'package:ibiapabaapp/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:ibiapabaapp/features/auth/data/mappers/auth_exception_to_failure_mapper.dart';
-import 'package:ibiapabaapp/features/auth/domain/entities/register_form_data.dart';
+import 'package:ibiapabaapp/features/accounts/domain/entities/account.dart';
+import 'package:ibiapabaapp/features/accounts/domain/entities/account_type.dart';
+import 'package:ibiapabaapp/features/accounts/domain/entities/gender.dart';
 import 'package:ibiapabaapp/features/auth/domain/entities/auth_result.dart';
 import 'package:ibiapabaapp/features/auth/domain/entities/check_availability.dart';
-import 'package:ibiapabaapp/features/auth/domain/entities/account.dart';
+import 'package:ibiapabaapp/features/auth/domain/entities/complete_google_registration.dart';
+import 'package:ibiapabaapp/features/auth/domain/entities/google_auth_result.dart';
+import 'package:ibiapabaapp/features/auth/domain/entities/register_form_data.dart';
 import 'package:ibiapabaapp/features/auth/domain/repositories/auth_repository.dart';
 import 'package:ibiapabaapp/features/auth/domain/tags/auth_logtags.dart';
 import 'package:logger/logger.dart';
@@ -114,6 +118,51 @@ class AuthRepositoryImpl with RepositoryLogHandler implements AuthRepository {
           exception: e,
           stackTrace: stack,
           action: AuthAction.refreshTokens,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, GoogleAuthResult>> loginWithGoogle({
+    required String idToken,
+  }) async {
+    try {
+      final result = await datasource.loginWithGoogle(idToken: idToken);
+      return Right(result);
+    } catch (e, stack) {
+      return Left(
+        handleRepositoryError(
+          exception: e,
+          stackTrace: stack,
+          action: AuthAction.loginWithGoogle,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, CompleteGoogleRegistrationResponse>>
+  completeGoogleRegistration({
+    required String tempToken,
+    required String slug,
+    required AccountType type,
+    Gender? gender,
+  }) async {
+    try {
+      final result = await datasource.completeGoogleRegistration(
+        tempToken: tempToken,
+        slug: slug,
+        type: type.value,
+        gender: gender?.value,
+      );
+      return Right(result);
+    } catch (e, stack) {
+      return Left(
+        handleRepositoryError(
+          exception: e,
+          stackTrace: stack,
+          action: AuthAction.completeGoogleRegistration,
         ),
       );
     }
