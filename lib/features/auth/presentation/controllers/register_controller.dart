@@ -1,11 +1,10 @@
+import 'package:ibiapabaapp/core/errors/failures/failures.dart';
 import 'package:ibiapabaapp/core/logger/handlers/controller_log_handler.dart';
 import 'package:ibiapabaapp/core/logger/log_tags.dart';
 import 'package:ibiapabaapp/core/logger/logger.dart';
 import 'package:ibiapabaapp/core/preferences/user_preferences_state_provider.dart';
 import 'package:ibiapabaapp/features/auth/domain/entities/check_availability.dart';
 import 'package:ibiapabaapp/features/auth/domain/tags/auth_logtags.dart';
-import 'package:ibiapabaapp/features/auth/domain/usecases/check_unique_availability.dart';
-import 'package:ibiapabaapp/features/auth/domain/usecases/register_with_email.dart';
 import 'package:ibiapabaapp/features/auth/presentation/providers/auth_providers.dart';
 import 'package:ibiapabaapp/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:ibiapabaapp/features/auth/presentation/states/register_state.dart';
@@ -20,7 +19,7 @@ part 'register_controller.g.dart';
 @riverpod
 class RegisterController extends _$RegisterController
     with ControllerLogHandler
-    implements SlugChecker, EmailChecker /*, PhoneChecker */ {
+    implements SlugChecker, EmailChecker {
   @override
   late final Logger logger = ref.read(loggerProvider);
 
@@ -44,12 +43,6 @@ class RegisterController extends _$RegisterController
     );
   }
 
-  // void setBirthDate(DateTime? v) {
-  //   state = state.copyWith(
-  //     formData: state.formData.copyWithField(AuthFields.birthDate, v),
-  //   );
-  // }
-
   @override
   void setSlug(String v) {
     final availability =
@@ -67,24 +60,6 @@ class RegisterController extends _$RegisterController
       availability: availability,
     );
   }
-
-  // @override
-  // void setPhone(String v) {
-  //   final availability =
-  //       Map<
-  //         AvailabilityField,
-  //         ({bool? available, String? error, bool isChecking})
-  //       >.from(state.availability);
-  //   availability[AvailabilityField.phoneNumber] = (
-  //     available: null,
-  //     error: null,
-  //     isChecking: false,
-  //   );
-  //   state = state.copyWith(
-  //     formData: state.formData.copyWithField(AuthFields.phoneNumber, v),
-  //     availability: availability,
-  //   );
-  // }
 
   @override
   void setEmail(String v) {
@@ -118,8 +93,6 @@ class RegisterController extends _$RegisterController
 
   // ─── Unique Validation ─────────────────────────────────────────────────────
   Future<bool> _validateUnique(AvailabilityField field, String value) async {
-    final checkAvailability = ref.read(checkUniqueAvailabilityProvider);
-
     final loadingAvailability =
         Map<
           AvailabilityField,
@@ -132,48 +105,50 @@ class RegisterController extends _$RegisterController
     );
     state = state.copyWith(availability: loadingAvailability);
 
-    final result = await checkAvailability(
-      CheckUniqueAvailabilityParams(field: field, value: value),
-    );
+    try {
+      final repository = ref.read(authRepositoryProvider);
+      final availabilityResult = await repository.checkAvailability(
+        field: field,
+        value: value,
+      );
 
-    if (!ref.mounted) return false;
+      if (!ref.mounted) return false;
 
-    return result.fold(
-      (failure) {
-        final availability =
-            Map<
-              AvailabilityField,
-              ({bool? available, String? error, bool isChecking})
-            >.from(state.availability);
-        availability[field] = (
-          available: false,
-          error: failure.message,
-          isChecking: false,
-        );
-        state = state.copyWith(availability: availability);
-        logControllerError(action: AuthAction.register, failure: failure);
-        return false;
-      },
-      (availabilityResult) {
-        final availability =
-            Map<
-              AvailabilityField,
-              ({bool? available, String? error, bool isChecking})
-            >.from(state.availability);
-        availability[field] = (
-          available: availabilityResult.available,
-          error: null,
-          isChecking: false,
-        );
-        state = state.copyWith(availability: availability);
-        logControllerSuccess(action: AuthAction.register);
-        return availabilityResult.available;
-      },
-    );
+      final availability =
+          Map<
+            AvailabilityField,
+            ({bool? available, String? error, bool isChecking})
+          >.from(state.availability);
+      availability[field] = (
+        available: availabilityResult.available,
+        error: null,
+        isChecking: false,
+      );
+      state = state.copyWith(availability: availability);
+      logControllerSuccess(action: AuthAction.register);
+      return availabilityResult.available;
+    } catch (e) {
+      if (!ref.mounted) return false;
+
+      final message = e is AppFailure ? e.message : 'Erro inesperado';
+      final availability =
+          Map<
+            AvailabilityField,
+            ({bool? available, String? error, bool isChecking})
+          >.from(state.availability);
+      availability[field] = (
+        available: false,
+        error: message,
+        isChecking: false,
+      );
+      state = state.copyWith(availability: availability);
+      logControllerError(
+        action: AuthAction.register,
+        failure: e is AppFailure ? e : InternalFailure(message),
+      );
+      return false;
+    }
   }
-
-  // Future<bool> checkPhone(String v) =>
-  //     _validateUnique(AvailabilityField.phoneNumber, v);
 
   // ─── Slug ──────────────────────────────────────────────────────────────────
   @override
@@ -197,44 +172,37 @@ class RegisterController extends _$RegisterController
   @override
   bool isEmailChecking() => isChecking(AvailabilityField.email);
 
-  // @override
-  // Future<bool> checkPhoneAvailability(String phone) =>
-  //     _validateUnique(AvailabilityField.phoneNumber, phone);
-
-  // @override
-  // bool? isPhoneAvailable() => isAvailable(AvailabilityField.phoneNumber);
-
-  // @override
-  // bool isPhoneChecking() => isChecking(AvailabilityField.phoneNumber);
-
   // ─── Submit ────────────────────────────────────────────────────────────────
   Future<void> submit() async {
     state = state.copyWith(status: RegisterStatus.loading);
 
-    final registerWithEmail = ref.read(registerWithEmailProvider);
     final authState = ref.read(authStateProvider.notifier);
     final prefs = ref.read(userPreferencesStateProvider.notifier);
 
-    final result = await registerWithEmail(
-      RegisterWithEmailParams(registerFormData: state.formData),
-    );
+    try {
+      final repository = ref.read(authRepositoryProvider);
+      final authResult = await repository.register(
+        registerFormData: state.formData,
+      );
 
-    if (!ref.mounted) return;
+      if (!ref.mounted) return;
 
-    await result.fold(
-      (failure) async {
-        logControllerError(action: AuthAction.register, failure: failure);
-        state = state.copyWith(
-          status: RegisterStatus.error,
-          errorMessage: failure.message,
-        );
-      },
-      (authResult) async {
-        logControllerSuccess(action: AuthAction.register);
-        await authState.initSession(authResult);
-        prefs.setNeedsOnboarding(true);
-        state = state.copyWith(status: RegisterStatus.success);
-      },
-    );
+      logControllerSuccess(action: AuthAction.register);
+      await authState.initSession(authResult);
+      prefs.setNeedsOnboarding(true);
+      state = state.copyWith(status: RegisterStatus.success);
+    } catch (e) {
+      if (!ref.mounted) return;
+
+      final message = e is AppFailure ? e.message : 'Erro inesperado';
+      logControllerError(
+        action: AuthAction.register,
+        failure: e is AppFailure ? e : InternalFailure(message),
+      );
+      state = state.copyWith(
+        status: RegisterStatus.error,
+        errorMessage: message,
+      );
+    }
   }
 }
