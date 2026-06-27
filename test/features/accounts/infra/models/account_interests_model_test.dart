@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ibiapabaapp/features/accounts/infra/models/account_interests_model.dart';
+import 'package:ibivibe/features/accounts/infra/models/account_interests_model.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
@@ -53,7 +53,7 @@ void main() {
       test('should not be equal when businesses differ', () {
         final a = AccountInterestsModel.fromJson(jsonMap);
         final b = AccountInterestsModel(
-          businesses: [],
+          businesses: const [],
           events: a.events,
         );
         expect(a, isNot(equals(b)));

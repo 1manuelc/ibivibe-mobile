@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ibiapabaapp/core/cache/cache_database_service.dart';
+import 'package:ibivibe/core/cache/cache_database_service.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -19,7 +19,7 @@ void main() {
 
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
-      MethodChannel('plugins.flutter.io/path_provider'),
+      const MethodChannel('plugins.flutter.io/path_provider'),
       (MethodCall methodCall) async {
         if (methodCall.method == 'getApplicationCacheDirectory') {
           return tempDir.path;

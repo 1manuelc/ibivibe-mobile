@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ibiapabaapp/features/auth/domain/entities/check_availability.dart';
-import 'package:ibiapabaapp/features/auth/infra/models/check_availability_model.dart';
+import 'package:ibivibe/features/auth/domain/entities/check_availability.dart';
+import 'package:ibivibe/features/auth/infra/models/check_availability_model.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
@@ -41,7 +41,7 @@ void main() {
       });
 
       test('should serialize phoneNumber field to phone_number', () {
-        final model = CheckAvailabilityModel(
+        final model = const CheckAvailabilityModel(
           field: AvailabilityField.phoneNumber,
           value: '+5511999999999',
           available: true,

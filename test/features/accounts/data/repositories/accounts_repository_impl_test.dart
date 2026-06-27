@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ibiapabaapp/core/errors/exceptions/exceptions.dart';
-import 'package:ibiapabaapp/features/accounts/data/repositories/accounts_repository_impl.dart';
-import 'package:ibiapabaapp/features/accounts/domain/entities/account_interests.dart';
-import 'package:ibiapabaapp/features/accounts/domain/entities/account_interests_response.dart';
-import 'package:ibiapabaapp/shared/models/account.dart';
-import 'package:ibiapabaapp/shared/models/account_type.dart';
+import 'package:ibivibe/core/errors/exceptions/exceptions.dart';
+import 'package:ibivibe/features/accounts/data/repositories/accounts_repository_impl.dart';
+import 'package:ibivibe/features/accounts/domain/entities/account_interests.dart';
+import 'package:ibivibe/features/accounts/domain/entities/account_interests_response.dart';
+import 'package:ibivibe/shared/models/account.dart';
+import 'package:ibivibe/shared/models/account_type.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../mocks/mocks.dart';
@@ -231,8 +231,8 @@ void main() {
   group('updateAccountInterests', () {
     test('returns response on success', () async {
       final interests = AccountInterests(
-        businesses: [Interest(id: 'b1', name: 'Business 1')],
-        events: [Interest(id: 'e1', name: 'Event 1')],
+        businesses: [const Interest(id: 'b1', name: 'Business 1')],
+        events: [const Interest(id: 'e1', name: 'Event 1')],
       );
       when(() => mockDio.post('/accounts/1/interests', data: any(named: 'data')))
           .thenAnswer((_) async => makeResponse({'count': 2}));
