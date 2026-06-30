@@ -1,7 +1,7 @@
 import 'package:ibivibe/core/preferences/user_preferences_state_provider.dart';
 import 'package:ibivibe/shared/providers/accounts_state_provider.dart';
-import 'package:ibivibe/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:ibivibe/features/auth/presentation/providers/google_oauth_state_provider.dart';
+import 'package:ibivibe/features/auth/auth_state_provider.dart';
+import 'package:ibivibe/features/auth/google_oauth_state_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router_redirect_provider.g.dart';

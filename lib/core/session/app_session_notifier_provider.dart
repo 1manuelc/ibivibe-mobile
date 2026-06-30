@@ -5,9 +5,9 @@ import 'package:ibivibe/core/logger/logger.dart';
 import 'package:ibivibe/core/preferences/user_preferences_state_provider.dart';
 import 'package:ibivibe/core/session/app_session.dart';
 import 'package:ibivibe/core/session/app_session_logtags.dart';
-import 'package:ibivibe/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:ibivibe/features/favorites/presentation/providers/favorites_state_provider.dart';
-import 'package:ibivibe/features/search/presentation/providers/search_state_provider.dart';
+import 'package:ibivibe/features/auth/auth_state_provider.dart';
+import 'package:ibivibe/features/favorites/favorites_state_provider.dart';
+import 'package:ibivibe/features/search/search_state_provider.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

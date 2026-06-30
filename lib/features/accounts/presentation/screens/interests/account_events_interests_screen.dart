@@ -8,10 +8,10 @@ import 'package:ibivibe/features/accounts/models/account_interests_response.dart
 import 'package:ibivibe/features/accounts/transform_account_interests.dart';
 import 'package:ibivibe/shared/models/category_entity.dart';
 import 'package:ibivibe/shared/models/parent_category.dart';
-import 'package:ibivibe/features/categories/presentation/providers/categories_providers.dart';
-import 'package:ibivibe/features/accounts/presentation/controllers/account_interests_controller.dart';
-import 'package:ibivibe/features/onboarding/presentation/dialogs/skip_interests_dialog.dart';
-import 'package:ibivibe/features/onboarding/presentation/widgets/interests_accordion.dart';
+import 'package:ibivibe/features/categories/categories_providers.dart';
+import 'package:ibivibe/features/accounts/account_interests_controller.dart';
+import 'package:ibivibe/features/onboarding/skip_interests_dialog.dart';
+import 'package:ibivibe/features/onboarding/interests_accordion.dart';
 import 'package:ibivibe/shared/ui/fragments/effects/default_shimmer_effect.dart';
 import 'package:ibivibe/shared/ui/fragments/toast/show_app_toast.dart';
 import 'package:skeletonizer/skeletonizer.dart';

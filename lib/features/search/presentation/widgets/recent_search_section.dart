@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 import 'package:ibivibe/core/session/app_session_notifier_provider.dart';
-import 'package:ibivibe/features/search/presentation/providers/search_state_provider.dart';
+import 'package:ibivibe/features/search/search_state_provider.dart';
 import 'package:ibivibe/features/search/presentation/widgets/recent_search_item.dart';
 
 class RecentSearchSection extends ConsumerWidget {

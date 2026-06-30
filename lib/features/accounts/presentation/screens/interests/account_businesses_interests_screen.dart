@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:ibivibe/core/entities/entity_type.dart';
 import 'package:ibivibe/features/accounts/transform_account_interests.dart';
 import 'package:ibivibe/shared/models/parent_category.dart';
-import 'package:ibivibe/features/categories/presentation/providers/categories_providers.dart';
+import 'package:ibivibe/features/categories/categories_providers.dart';
 import 'package:ibivibe/shared/models/category_entity.dart';
-import 'package:ibivibe/features/accounts/presentation/controllers/account_interests_controller.dart';
-import 'package:ibivibe/features/onboarding/presentation/widgets/interests_accordion.dart';
+import 'package:ibivibe/features/accounts/account_interests_controller.dart';
+import 'package:ibivibe/features/onboarding/interests_accordion.dart';
 import 'package:ibivibe/shared/ui/fragments/effects/default_shimmer_effect.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

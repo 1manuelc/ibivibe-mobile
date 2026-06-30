@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
-import 'package:ibivibe/features/auth/presentation/controllers/register_controller.dart';
-import 'package:ibivibe/features/auth/presentation/states/register_state.dart';
+import 'package:ibivibe/features/auth/register_controller.dart';
+import 'package:ibivibe/features/auth/register_state.dart';
 import 'package:ibivibe/features/auth/validation/auth_validator.dart';
 
 class CreatePasswordFields extends ConsumerStatefulWidget {

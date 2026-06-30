@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ibivibe/features/auth/presentation/providers/auth_providers.dart';
+import 'package:ibivibe/features/auth/auth_providers.dart';
 import 'package:ibivibe/features/auth/presentation/widgets/login/login_form.dart';
 import 'package:ibivibe/features/auth/presentation/widgets/shared/google_oauth_button.dart';
 import 'package:ibivibe/features/auth/presentation/widgets/shared/text_between_dividers.dart';

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
-import 'package:ibivibe/features/auth/presentation/controllers/register_controller.dart';
+import 'package:ibivibe/features/auth/register_controller.dart';
 import 'package:ibivibe/shared/ui/forms/fields/name/name_field.dart';
 import 'package:ibivibe/shared/ui/forms/fields/slug/slug_field.dart';
 import 'package:ibivibe/shared/ui/layout/form_topbar.dart';

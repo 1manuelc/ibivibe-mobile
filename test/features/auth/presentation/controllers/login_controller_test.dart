@@ -4,9 +4,9 @@ import 'package:ibivibe/shared/models/account.dart';
 import 'package:ibivibe/shared/models/account_type.dart';
 import 'package:ibivibe/features/auth/models/auth_result.dart';
 import 'package:ibivibe/features/auth/auth_repository.dart';
-import 'package:ibivibe/features/auth/presentation/controllers/login_controller.dart';
-import 'package:ibivibe/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:ibivibe/features/auth/presentation/states/login_state.dart';
+import 'package:ibivibe/features/auth/login_controller.dart';
+import 'package:ibivibe/features/auth/auth_state_provider.dart';
+import 'package:ibivibe/features/auth/login_state.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
